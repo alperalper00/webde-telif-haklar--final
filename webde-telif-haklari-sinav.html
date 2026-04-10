@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web'de Telif Hakları — AÖF Final Hazırlık</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #13161e;
+  --bg3: #1a1e2a;
+  --card: #1e2330;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #e8eaf0;
+  --text2: #8b91a8;
+  --text3: #5a6070;
+  --accent: #6c8fff;
+  --accent2: #4a6de8;
+  --green: #3ecf8e;
+  --red: #f87171;
+  --amber: #fbbf24;
+  --purple: #a78bfa;
+  --teal: #2dd4bf;
+  --font: 'Sora', sans-serif;
+  --mono: 'Space Mono', monospace;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+.light {
+  --bg: #f5f6fa;
+  --bg2: #eceef5;
+  --bg3: #e2e4ef;
+  --card: #ffffff;
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.15);
+  --text: #1a1e2a;
+  --text2: #4a5168;
+  --text3: #8b91a8;
+  --accent: #3a5ce8;
+  --accent2: #2a4cd0;
+  --green: #059669;
+  --red: #dc2626;
+  --amber: #d97706;
+  --purple: #7c3aed;
+  --teal: #0d9488;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s;}
+a{text-decoration:none;color:inherit;}
+.shell{display:flex;min-height:100vh;}
+.sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100;transition:transform 0.3s;}
+.main{margin-left:260px;flex:1;min-height:100vh;}
+.sidebar-logo{padding:24px 20px 16px;border-bottom:1px solid var(--border);}
+.logo-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:0.05em;color:var(--accent);background:rgba(108,143,255,0.1);border:1px solid rgba(108,143,255,0.25);padding:5px 10px;border-radius:20px;margin-bottom:10px;}
+.logo-title{font-size:15px;font-weight:700;color:var(--text);line-height:1.3;}
+.logo-sub{font-size:11px;color:var(--text3);margin-top:3px;font-family:var(--mono);}
+.nav-section{padding:16px 12px 8px;}
+.nav-label{font-size:10px;font-weight:600;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;padding:0 8px;margin-bottom:6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.15s;margin-bottom:2px;}
+.nav-item:hover{background:var(--bg3);color:var(--text);}
+.nav-item.active{background:rgba(108,143,255,0.12);color:var(--accent);font-weight:600;}
+.nav-icon{width:16px;height:16px;flex-shrink:0;opacity:0.7;}
+.nav-item.active .nav-icon{opacity:1;}
+.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border);}
+.theme-toggle{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:12px;color:var(--text2);width:100%;}
+.theme-toggle:hover{border-color:var(--border2);color:var(--text);}
+.page-header{padding:32px 32px 24px;border-bottom:1px solid var(--border);}
+.page-title{font-size:26px;font-weight:700;margin-bottom:4px;}
+.page-desc{font-size:13px;color:var(--text2);}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color 0.15s;}
+.card:hover{border-color:var(--border2);}
+.grid{display:grid;gap:16px;}
+.g2{grid-template-columns:repeat(2,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+.stat{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;}
+.stat-val{font-size:28px;font-weight:700;font-family:var(--mono);}
+.stat-label{font-size:11px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em;}
+.stat-sub{font-size:12px;color:var(--text2);margin-top:4px;}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;font-family:var(--mono);}
+.badge-blue{background:rgba(108,143,255,0.12);color:var(--accent);border:1px solid rgba(108,143,255,0.2);}
+.badge-green{background:rgba(62,207,142,0.12);color:var(--green);border:1px solid rgba(62,207,142,0.2);}
+.badge-red{background:rgba(248,113,113,0.12);color:var(--red);border:1px solid rgba(248,113,113,0.2);}
+.badge-amber{background:rgba(251,191,36,0.12);color:var(--amber);border:1px solid rgba(251,191,36,0.2);}
+.badge-purple{background:rgba(167,139,250,0.12);color:var(--purple);border:1px solid rgba(167,139,250,0.2);}
+.badge-teal{background:rgba(45,212,191,0.12);color:var(--teal);border:1px solid rgba(45,212,191,0.2);}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;font-family:var(--font);}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:var(--accent2);}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2);}
+.btn-ghost:hover{background:var(--bg3);color:var(--text);}
+.btn-green{background:var(--green);color:#fff;}
+.btn-red{background:var(--red);color:#fff;}
+.btn-sm{padding:7px 14px;font-size:12px;}
+.page{display:none;padding:32px;}
+.page.active{display:block;}
+.progress-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s;}
+.progress-fill.green{background:var(--green);}
+.progress-fill.red{background:var(--red);}
+.question-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;}
+.q-num{font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:8px;}
+.q-text{font-size:15px;line-height:1.7;color:var(--text);font-weight:500;margin-bottom:20px;}
+.q-options{display:flex;flex-direction:column;gap:8px;}
+.q-option{padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.15s;display:flex;align-items:center;gap:12px;}
+.q-option:hover{border-color:var(--accent);color:var(--text);background:rgba(108,143,255,0.05);}
+.q-option.selected{border-color:var(--accent);background:rgba(108,143,255,0.1);color:var(--text);}
+.q-option.correct{border-color:var(--green);background:rgba(62,207,142,0.1);color:var(--green);}
+.q-option.wrong{border-color:var(--red);background:rgba(248,113,113,0.1);color:var(--red);}
+.opt-letter{width:24px;height:24px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--mono);flex-shrink:0;}
+.explanation-box{background:rgba(62,207,142,0.05);border:1px solid rgba(62,207,142,0.2);border-radius:var(--radius-sm);padding:16px;margin-top:12px;font-size:13px;color:var(--text2);line-height:1.7;}
+.explanation-box.wrong{background:rgba(248,113,113,0.05);border-color:rgba(248,113,113,0.2);}
+.exp-title{font-weight:700;color:var(--green);margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;}
+.exp-title.wrong{color:var(--red);}
+.unit-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.unit-number{width:40px;height:40px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:16px;color:#fff;flex-shrink:0;}
+.topic-card{background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 16px;margin-bottom:10px;}
+.topic-title{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text);}
+.topic-items{list-style:none;padding:0;}
+.topic-items li{font-size:12px;color:var(--text2);padding:3px 0;line-height:1.6;display:flex;align-items:flex-start;gap:6px;}
+.topic-items li::before{content:"→";color:var(--accent);flex-shrink:0;margin-top:1px;}
+.sinav-notu{background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:var(--radius-sm);padding:10px 14px;margin-top:8px;font-size:11px;color:var(--amber);display:flex;align-items:flex-start;gap:8px;}
+.sinav-notu::before{content:"★";flex-shrink:0;}
+.tabs{display:flex;gap:4px;background:var(--bg3);padding:4px;border-radius:var(--radius-sm);margin-bottom:24px;flex-wrap:wrap;}
+.tab{padding:8px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text3);transition:all 0.15s;}
+.tab.active{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.tab:hover:not(.active){color:var(--text2);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.timer-display{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--accent);background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 20px;display:inline-block;}
+.timer-display.warning{color:var(--amber);}
+.timer-display.danger{color:var(--red);}
+.result-score{font-size:72px;font-weight:700;font-family:var(--mono);text-align:center;line-height:1;}
+.result-grade{font-size:20px;font-weight:600;text-align:center;margin-top:8px;}
+.flashcard{perspective:600px;height:180px;cursor:pointer;margin-bottom:16px;}
+.flashcard-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.5s;}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+.flashcard-front,.flashcard-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;}
+.flashcard-front{background:var(--card);}
+.flashcard-back{background:var(--bg3);transform:rotateY(180deg);}
+.fc-hint{font-size:10px;color:var(--text3);position:absolute;bottom:12px;right:14px;}
+.mob-nav-btn{display:none;position:fixed;top:16px;left:16px;z-index:200;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;cursor:pointer;}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .mob-nav-btn{display:flex;}
+  .sidebar-overlay.show{display:block;}
+  .g4{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:1fr;}
+  .g2{grid-template-columns:1fr;}
+  .page{padding:24px 16px;}
+  .page-header{padding:64px 20px 20px;}
+}
+.heat-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.heat-bar{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.heat-fill{height:100%;border-radius:4px;}
+.heat-count{font-family:var(--mono);font-size:12px;color:var(--text2);min-width:30px;text-align:right;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--border2);}
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
+.tag{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:var(--mono);background:var(--bg3);color:var(--text3);border:1px solid var(--border);margin-right:4px;}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+</style>
+</head>
+<body>
+
+<button class="mob-nav-btn" onclick="toggleSidebar()" aria-label="Menü">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+</button>
+<div class="sidebar-overlay" onclick="toggleSidebar()" id="overlay"></div>
+
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-badge">AÖF · BAHAR 2025</div>
+    <div class="logo-title">Web'de Telif Hakları</div>
+    <div class="logo-sub">Final Sınav Hazırlık Sistemi</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Ana Menü</div>
+    <div class="nav-item active" onclick="showPage('dashboard')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h5v5H2V2zm7 0h5v5H9V2zm-7 7h5v5H2V9zm7 0h5v5H9V9z"/></svg>
+      Genel Bakış
+    </div>
+    <div class="nav-item" onclick="showPage('analiz')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 12h2V6H1v6zm3 0h2V2H4v10zm3 0h2V9H7v3zm3 0h2V4h-2v8zm3 0h2V7h-2v5z"/></svg>
+      Soru Analizi
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Konu Özetleri</div>
+    <div class="nav-item" onclick="showPage('unite5')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm1 3v1h8V5H4zm0 3v1h8V8H4zm0 3v1h5v-1H4z"/></svg>
+      Ünite 5 — Web Tasarımı
+    </div>
+    <div class="nav-item" onclick="showPage('unite6')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm1 3v1h8V5H4zm0 3v1h8V8H4zm0 3v1h5v-1H4z"/></svg>
+      Ünite 6 — Lisanslar & Reklamcılık
+    </div>
+    <div class="nav-item" onclick="showPage('unite7')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm1 3v1h8V5H4zm0 3v1h8V8H4zm0 3v1h5v-1H4z"/></svg>
+      Ünite 7 — Kişisel Veri & Marka
+    </div>
+    <div class="nav-item" onclick="showPage('unite8')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1zm1 3v1h8V5H4zm0 3v1h8V8H4zm0 3v1h5v-1H4z"/></svg>
+      Ünite 8 — Alan Adı & DRM
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Soru Sistemleri</div>
+    <div class="nav-item" onclick="showPage('cikmisSorular')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3a1 1 0 110 2 1 1 0 010-2zm-1 4h2v4H7V8z"/></svg>
+      Çıkmış Sorular
+    </div>
+    <div class="nav-item" onclick="showPage('sinavModu')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm.5 10.5h-1v-5h1v5zm0-6.5h-1V4h1v1z"/></svg>
+      Sınav Modu
+    </div>
+    <div class="nav-item" onclick="showPage('tahmini')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 4l6-3 6 3v5c0 3-6 6-6 6S2 12 2 9V4z"/></svg>
+      Tahmini Sorular
+    </div>
+    <div class="nav-item" onclick="showPage('hizliTekrar')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M3 8a5 5 0 1010 0A5 5 0 003 8zm4-2h2v2.5l1.5 1-1 1.7L7 9.5V6z"/></svg>
+      Hızlı Tekrar
+    </div>
+    <div class="nav-item" onclick="showPage('gelisim')">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 12h2V6H1v6zm3 0h2V2H4v10zm3 0h2V9H7v3zm3 0h2V4h-2v8zm3 0h2V7h-2v5z"/></svg>
+      Gelişim Takibi
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1a6 6 0 100 12A6 6 0 007 1zm0 1.5A4.5 4.5 0 117 11V2.5z"/></svg>
+      <span id="theme-label">Aydınlık Mod</span>
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- DASHBOARD -->
+<div class="page active" id="page-dashboard">
+  <div class="page-header">
+    <div class="page-title">Web'de Telif Hakları — Final Hazırlık</div>
+    <div class="page-desc">5–8. Ünite · AÖF Bahar Dönemi · 3 yıllık çıkmış soru analizi</div>
+  </div>
+  <div style="padding:28px;">
+    <div class="grid g4" style="margin-bottom:24px;">
+      <div class="stat"><div class="stat-val" style="color:var(--green);" id="stat-dogru">0</div><div class="stat-label">Doğru</div><div class="stat-sub" id="stat-dogru-oran">—</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--red);" id="stat-yanlis">0</div><div class="stat-label">Yanlış</div><div class="stat-sub" id="stat-yanlis-oran">—</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--accent);">60</div><div class="stat-label">Toplam Soru</div><div class="stat-sub">3 yıl × 20 soru (tam)</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--amber);" id="stat-sinav">0</div><div class="stat-label">Tamamlanan Sınav</div><div class="stat-sub">Sınav modundan</div></div>
+    </div>
+    <div class="grid g2" style="margin-bottom:24px;">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px;">🔥 En Çok Çıkan Konular</div>
+        <div class="heat-item"><span style="font-size:12px;color:var(--text2);min-width:180px;">Alan Adı Sistemi (.tr uzantıları)</span><div class="heat-bar"><div class="heat-fill" style="width:100%;background:var(--red);"></div></div><span class="heat-count">6x</span></div>
+        <div class="heat-item"><span style="font-size:12px;color:var(--text2);min-width:180px;">Sabit/Esnek Tasarım Avantajları</span><div class="heat-bar"><div class="heat-fill" style="width:83%;background:var(--amber);"></div></div><span class="heat-count">5x</span></div>
+        <div class="heat-item"><span style="font-size:12px;color:var(--text2);min-width:180px;">DRM Tarafları (hangisi değildir)</span><div class="heat-bar"><div class="heat-fill" style="width:83%;background:var(--amber);"></div></div><span class="heat-count">5x</span></div>
+        <div class="heat-item"><span style="font-size:12px;color:var(--text2);min-width:180px;">KVKK m.11 Hakları</span><div class="heat-bar"><div class="heat-fill" style="width:67%;background:var(--accent);"></div></div><span class="heat-count">4x</span></div>
+        <div class="heat-item"><span style="font-size:12px;color:var(--text2);min-width:180px;">Marka Koruma Süresi</span><div class="heat-bar"><div class="heat-fill" style="width:67%;background:var(--accent);"></div></div><span class="heat-count">4x</span></div>
+        <div class="heat-item"><span style="font-size:12px;color:var(--text2);min-width:180px;">Hosting / Banner Reklamcılığı</span><div class="heat-bar"><div class="heat-fill" style="width:50%;background:var(--purple);"></div></div><span class="heat-count">3x</span></div>
+        <div class="heat-item"><span style="font-size:12px;color:var(--text2);min-width:180px;">Erişilebilirlik İlkeleri</span><div class="heat-bar"><div class="heat-fill" style="width:50%;background:var(--purple);"></div></div><span class="heat-count">3x</span></div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px;">📚 Ünite Yoğunluğu</div>
+        <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text2);">Ünite 5 — Web Tasarımı</span><span style="font-family:var(--mono);color:var(--amber);">5-6 soru/yıl</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div></div>
+        <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text2);">Ünite 6 — Lisanslar & Reklam</span><span style="font-family:var(--mono);color:var(--amber);">4-5 soru/yıl</span></div><div class="progress-bar"><div class="progress-fill" style="width:60%;"></div></div></div>
+        <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text2);">Ünite 7 — Kişisel Veri & Marka</span><span style="font-family:var(--mono);color:var(--red);">6-7 soru/yıl</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%;background:var(--red);"></div></div></div>
+        <div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text2);">Ünite 8 — Alan Adı & DRM</span><span style="font-family:var(--mono);color:var(--red);">5-6 soru/yıl</span></div><div class="progress-bar"><div class="progress-fill" style="width:85%;background:var(--red);"></div></div></div>
+        <hr class="divider">
+        <div style="font-size:12px;color:var(--text3);">⚠️ Ünite 7 ve 8 en kritik ünitelerdir. Her yılın her sınavında çıkmaktadır.</div>
+      </div>
+    </div>
+    <div class="grid g3">
+      <div class="card" style="cursor:pointer;" onclick="showPage('cikmisSorular')">
+        <div style="font-size:24px;margin-bottom:8px;">📝</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Çıkmış Sorular</div>
+        <div style="font-size:12px;color:var(--text2);">3 yıllık (2022–2025) sınavların tüm soruları. Ünite bazlı veya karışık çöz.</div>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="showPage('sinavModu')">
+        <div style="font-size:24px;margin-bottom:8px;">⏱️</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Sınav Modu</div>
+        <div style="font-size:12px;color:var(--text2);">20 soruluk gerçek AÖF formatı. Süreli, rastgele, sonunda analiz.</div>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="showPage('hizliTekrar')">
+        <div style="font-size:24px;margin-bottom:8px;">⚡</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Hızlı Tekrar</div>
+        <div style="font-size:12px;color:var(--text2);">Son gün için flash kartlar. Tüm kritik kavramları hızlıca gözden geçir.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ANALİZ -->
+<div class="page" id="page-analiz">
+  <div class="page-header">
+    <div class="page-title">Soru Analizi</div>
+    <div class="page-desc">3 yıllık sınav (2022–2025) detaylı konu ve soru tipi analizi</div>
+  </div>
+  <div style="padding:28px;">
+    <div class="grid g2">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px;">📊 Konu Frekansı (Toplam)</div>
+        <div id="analiz-list"></div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px;">🎯 Soru Tipleri</div>
+        <div id="tip-list"></div>
+        <hr class="divider">
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px;">📚 Ünite Dağılımı</div>
+        <div id="unite-dist"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:16px;">⚠️ Sorulmamış ama Çıkma İhtimali Yüksek Konular</div>
+      <div class="grid g2">
+        <div>
+          <div class="topic-card" style="border-color:var(--red);">
+            <div class="topic-title">Bern Sözleşmesi Ayrıntıları <span class="badge badge-red">Yüksek İhtimal</span></div>
+            <ul class="topic-items"><li>9 Eylül 1886'da Bern'de imzalandı (Paris'te değil!)</li><li>Karşılıklılık + eşit işlem + asgari haklar ilkeleri</li><li>Telif hakları ticari markaları KAPSAMAZ (TRIPs kapsıyor)</li></ul>
+          </div>
+          <div class="topic-card" style="border-color:var(--amber);">
+            <div class="topic-title">Fonogram Yapımcısı Tanımı <span class="badge badge-amber">Orta İhtimal</span></div>
+            <ul class="topic-items"><li>Sözlü veya sözsüz eserlerin ilk tespitini yapan kişi</li><li>Hukuksal sorumluluğu yüklenen kişi = Fonogram yapımcısı</li></ul>
+          </div>
+        </div>
+        <div>
+          <div class="topic-card" style="border-color:var(--red);">
+            <div class="topic-title">Yaratıcı Beraberlikler Özellikleri <span class="badge badge-red">Yüksek İhtimal</span></div>
+            <ul class="topic-items"><li>KÂR AMACI GÜTMEZ (bu soruluyor!)</li><li>Telif hakkı esnekliği için kuruldu</li><li>Elektronik etiket sistemi var</li><li>Kamu lisansı türüdür</li></ul>
+          </div>
+          <div class="topic-card" style="border-color:var(--purple);">
+            <div class="topic-title">GPL vs MIT vs Apache Farkları <span class="badge badge-purple">Orta İhtimal</span></div>
+            <ul class="topic-items"><li>Telif bulundurması zorunlu: GPL ve Yaratıcı Beraberlikler</li><li>GPL = Copyleft (değiştirilmiş kod da özgür olmalı)</li><li>MIT/Apache = Permissive (daha özgür)</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜNİTE 5 -->
+<div class="page" id="page-unite5">
+  <div class="page-header">
+    <div class="page-title">Ünite 5 — Web Tasarımı ve Erişilebilirlik</div>
+    <div class="page-desc">HTML5 · CSS · Tasarım İlkeleri · Erişilebilirlik · Responsive Tasarım</div>
+  </div>
+  <div style="padding:28px;">
+    <div class="grid g2">
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--accent);">5</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">HTML5 ve Web Teknolojileri</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 1-2 soru</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">HTML5 Özellikleri <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li>HTML dilinin <strong>en son sürümüdür</strong></li>
+            <li>Modern web uygulamaları için yeni eklentiler ve özellikler sunar</li>
+            <li>HTML dilinin işlevselliği, programlama ve sunum gücü artmıştır</li>
+            <li>Yeni teknolojiler barındırır veya önceden var olanların kullanımını sağlar</li>
+            <li><strong>XML belgelerinin uyması gereken kuralları belirlemek için GELİŞTİRİLMEMİŞTİR</strong> (bu XSLT/XSD'nin işi)</li>
+          </ul>
+          <div class="sinav-notu">HTML5'in özelliği DEĞİL olan: "XML belgelerinin kurallarını belirlemek". 2024-25 sınavında çıktı!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">Web Teknolojileri Kavramları</div>
+          <ul class="topic-items">
+            <li><strong>CSS:</strong> Web sayfasında renk, boyut, arka plan resmi, konum gibi özellikleri kontrol eder</li>
+            <li><strong>HTML:</strong> Yazı, video, görsel gibi unsurların sayfaya yerleştirilmesini sağlayan zengin metin işaretleme dili</li>
+            <li><strong>W3C:</strong> Web standartlarını belirleyen kuruluş</li>
+            <li><strong>DOM:</strong> Document Object Model</li>
+            <li><strong>Widget:</strong> Web sayfasına eklenen küçük uygulama bileşeni</li>
+            <li><strong>Köprü:</strong> Bir web sayfasından diğerine bağlantı</li>
+            <li><strong>RDFa:</strong> Zengin meta verilerini web belgelerine yerleştirmek için HTML/XHTML'e öznitelik düzeyinde uzantılar ekleyen W3C önerisi</li>
+          </ul>
+          <div class="sinav-notu">CSS = Tasarım/görünüm. HTML = İçerik yapısı. CSS sorusu 2023-24'te çıktı (renk, boyut, konum kontrolü).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">İstemci / Sunucu Kavramları</div>
+          <ul class="topic-items">
+            <li><strong>İstemci Taraflı:</strong> Kullanıcının bilgisayarında çalışan komut dosyaları (JavaScript)</li>
+            <li><strong>Sunucu Taraflı:</strong> Sunucuda çalışan komut dosyaları</li>
+            <li><strong>Bant Genişliği:</strong> Herhangi bir iletim ortamının/haberleşme kanalının kapasitesi</li>
+            <li><strong>Çıkma Oranı:</strong> Kullanıcının siteye girip hemen çıkma oranı</li>
+            <li><strong>Çözünürlük:</strong> Ekranda görüntülenen fiziksel piksel sayısı</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--green);">5</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">Tasarım İlkeleri ve Erişilebilirlik</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 2-3 soru</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">Evrensel Tasarım İlkeleri <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Adil Kullanım:</strong> Herkesin kullanabileceği eşit imkânlar</li>
+            <li><strong>Kullanım Esnekliği:</strong> Farklı kullanıcı tercih ve yeteneklerine uyum</li>
+            <li><strong>Basit ve Sezgisel Kullanım:</strong> Tecrübe, bilgi, dil becerileri ya da dikkat düzeyine bağlı olmaksızın kolay anlaşılmalı</li>
+            <li><strong>Algılanabilir Bilgi:</strong> Gerekli bilginin kullanıcıya etkin iletilmesi</li>
+            <li><strong>Hatalara Tolerans:</strong> Kazara oluşan hataların zararını azaltma</li>
+          </ul>
+          <div class="sinav-notu">"Tecrübe, bilgi, dil becerileri ya da dikkat düzeyine bağlı olmaksızın kolay anlaşılmalı" = Basit ve Sezgisel Kullanım. 2024-25 sınavında çıktı!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">Erişilebilirlik İlkeleri (POUR) <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>P</strong> — Algılanabilirlik (Perceivable)</li>
+            <li><strong>O</strong> — Çalışabilirlik (Operable)</li>
+            <li><strong>U</strong> — Anlaşılabilirlik (Understandable)</li>
+            <li><strong>R</strong> — Sağlamlık (Robust)</li>
+            <li><strong>Çoğaltılabilirlik = ERİŞİLEBİLİRLİK İLKESİ DEĞİL!</strong></li>
+          </ul>
+          <div class="sinav-notu">Erişilebilirliğin ilkesi DEĞİL olan: Çoğaltılabilirlik. 2024-25 sınavında çıktı! Cevap D.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">Sabit Tasarım vs Esnek Tasarım <span class="badge badge-red">Her Yıl Çıkıyor</span></div>
+          <ul class="topic-items">
+            <li><strong>Sabit Tasarım Avantajları:</strong></li>
+            <li>→ Tasarımcının içerik görünümünü kontrol edebilmesi ✅</li>
+            <li>→ Metin uzunluğu üzerinde daha fazla kontrol ✅</li>
+            <li><strong>Sabit Tasarım Dezavantajları:</strong></li>
+            <li>→ Birden fazla cihaz için esneklik SAĞLAMAZ ❌</li>
+            <li>→ Kullanıcı içerik görünümünü kontrol EDEMEZ</li>
+            <li><strong>Esnek Tasarım:</strong> Farklı ekran boyutlarına uyum sağlar</li>
+          </ul>
+          <div class="sinav-notu">Sabit tasarım avantajı: "Tasarımcının içerik görünümünü kontrol edebilmesi." 2024-25: Cevap B. Dikkat: "Birden fazla cihaz için esneklik" SABİT'in avantajı DEĞİL!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">F-Tabanlı Okuma Düzeni (Nielsen)</div>
+          <ul class="topic-items">
+            <li><strong>Adım 1:</strong> Sayfanın üst kısmını okurlar</li>
+            <li><strong>Adım 2:</strong> Sayfayı biraz aşağı kaydırarak sayfayı tekrar ararlar</li>
+            <li><strong>Adım 3:</strong> İçeriği soldan dikey hareketle tararlar</li>
+            <li>Doğru sıra: II → III → I</li>
+          </ul>
+          <div class="sinav-notu">2021-22 sınavında çıktı. Sıralama: Üst kısım → Aşağı kaydır → Dikey tara. Cevap D (II, III, I).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Tarayıcı Uyumluluğu ve Web Tasarım Ortamı <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Tarayıcı Uyumluluk Sorunları:</strong> Her tarayıcı HTML etiketlerini farklı yorumlayan oluşturma motoru (rendering engine) içerir</li>
+            <li>W3C standartları takip edilmeli, kod onaylanmalı, hedef kitle bilinmeli, birden fazla tarayıcıda test edilmeli</li>
+            <li><strong>Bağlantı Hızı Farklılıkları:</strong> Mobil cihazlar ev/iş bilgisayarlarından daha düşük bant genişliği kullanır; farklı hızlarda test edilmeli</li>
+            <li><strong>Tarayıcı Önbelleği:</strong> Daha önce görüntülenmiş sayfaların kopyalarından oluşur; sayfa yüklenme hızını artırır, ağ yükünü azaltır</li>
+            <li><strong>Aygıt/İşletim Sistemi Sorunları:</strong> Ekran boyutu, renk derinliği, tarayıcı türü/sürümü, yazı tipi seçenekleri dikkate alınmalı</li>
+            <li><strong>Ekran çözünürlükleri:</strong> Masaüstünde en yaygın 1366x768; mobilde en yaygın 360x640</li>
+          </ul>
+          <div class="sinav-notu">Web tasarım ortamında bilinmesi GEREKMEYENLERden biri soruluyor → Web dilleri arasındaki fark bu listede YOK! Cevap B.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">Uyarlanabilir (Responsive) vs Sabit Tasarım — Ek Detay <span class="badge badge-red">Her Yıl Çıkıyor</span></div>
+          <ul class="topic-items">
+            <li><strong>Uyarlanabilir Tasarım AVANTAJI DEĞİL olan:</strong> «Farklı cihazlar için farklı tasarımlar gerçekleştirerek tam uyumluluk sağlar» ❌</li>
+            <li><strong>Uyarlanabilir avantajları:</strong> Kullanıcı görünümü kontrol eder, az yatay kaydırma, çok cihaz esnekliği, metin tabanlı düzenler için uygun</li>
+            <li><strong>Sabit tasarım avantajları:</strong> Tasarımcı kontrolü, karmaşık düzen, metin uzunluğu kontrolü</li>
+            <li><strong>Mobil Sitenin Ayrı Tasarlanması:</strong> Masaüstü ve mobil için iki farklı sürüm; sunucu aygıtı algılayarak yönlendirir</li>
+            <li><strong>Üç Tıklama Kuralı:</strong> Kullanıcı istediği içeriğe 3 tıklamadan fazla yapmamalı</li>
+            <li><strong>Izgara kullanımı:</strong> Sayfa yapısını sütunlara ve satırlara hizalayan kavramsal düzen biçimi; tutarlılık sağlar</li>
+          </ul>
+          <div class="sinav-notu">Uyarlanabilir tasarım avantajı DEĞİL: «Farklı cihazlar için farklı tasarımlar» — bu sabit+mobil ayrı tasarımın özelliğidir. Sınavda cevap A.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">Ticari Sır Kriterleri <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li>Ticari sır: Bir işletmenin ekonomik avantaj sağladığı, genel olarak bilinmeyen formül, süreç, tasarım, yöntem veya bilgi derlemesi</li>
+            <li>Ticari sır için <strong>resmi kayıt veya başvuru prosedürü YOKTUR</strong></li>
+            <li><strong>3 Kriter (hepsi sağlanmalı):</strong></li>
+            <li>→ Kamuya açık alanda olmamalı (ya da kolayca tespit edilebilir olmamalı)</li>
+            <li>→ Gizliliğine bağlı ekonomik değere sahip olmalı</li>
+            <li>→ Gizliliği korumak için makul tedbirler alınmış olmalı</li>
+            <li>Kamuya açıklanması hak iddia etme kabiliyetini yok edebilir</li>
+          </ul>
+          <div class="sinav-notu">Ticari sır için resmi başvuru/tescil GEREKMEZ. 3 kriterin tümü sağlanmalı. Bilgiyi ticari sır olarak adlandırmak tek başına yeterli değildir.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">Adil Kullanım İlkesi (Fair Use) <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li>Telif hakkı sahibinden izin almak zorunda kalmadan telif hakkıyla korunan materyalin <strong>sınırlı kullanımına</strong> izin veren ABD kaynaklı düzenleme</li>
+            <li>Haber, eğitim, yorum, eleştiri ve araştırma amaçlı kullanımlarda fikri hak ihlali olmaz</li>
+            <li><strong>Adil kullanım belirlenmesinde 4 Faktör:</strong></li>
+            <li>→ 1. Kullanımın amacı ve karakteri (ticari mi?)</li>
+            <li>→ 2. Telif hakkı alınmış çalışmanın doğası</li>
+            <li>→ 3. Kullanılacak eser miktarı (oranı)</li>
+            <li>→ 4. Kullanımın pazardaki etkisi veya eser değerine etkisi</li>
+            <li>Kısa ses klipleri (30 saniyenin altında veya sürenin %10'undan kısa) adil kullanım kapsamında değerlendirilebilir</li>
+          </ul>
+          <div class="sinav-notu">Adil Kullanım = «Telif hakkı sahibinden izin almadan sınırlı kullanım.» Sınavda tanım soruluyor. Cevap D (Adil Kullanım İlkesi).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">İnternet Reklamcılığı Türleri ve Modelleri <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>PPV / Görüntüleme Başına Ödeme:</strong> TV servis sağlayıcı abonelerinin özel yayın izlemek için program satın alabildiği ücretli hizmet</li>
+            <li><strong>İPPV (İnternet PPV):</strong> İnternetten erişilen görüntüleme başına ücret; boks, dövüş sanatları, güreş gibi sporlarda yaygın</li>
+            <li><strong>Tıklama Başına Ödeme (PPC):</strong> Kullanıcı reklamı tıkladığında reklam verene ödeme yapılan model; en popüler formu arama motoru reklamcılığı</li>
+            <li>Google AdWords = PPC sistemi örneği</li>
+            <li><strong>Banner Reklamcılığı:</strong> Belirli ücretle sitelere görsel/hareketli resimlerin yerleştirilmesi</li>
+            <li><strong>İnternet reklamcılığının avantajları:</strong> Düşük bütçe, hızlı hazırlama, anlık değişiklik, geniş kitleye ulaşma, dil seçeneği</li>
+          </ul>
+          <div class="sinav-notu">PPV = Belirli program için önceden ücret ödeme (TV/internet). PPC = Tıklamada ödeme. Banner = Görsel reklam. İnternet reklamları geleneksel reklamlara göre daha esnek ve ucuzdur.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">AJAX ve Önemli Web Jargonu <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>AJAX:</strong> Eşzamansız JavaScript ve XML — sayfayı yeniden yüklemeden eş zamansız veri alımı sağlar</li>
+            <li><strong>CSS:</strong> Bir web sitesinin gerçek HTML dosyası DIŞINDA görünümünü tanımlar (Basamaklı Stil Şablonu)</li>
+            <li><strong>İstemci Taraflı:</strong> Kullanıcının bilgisayarında çalışan komut dosyaları; daha hızlı etkileşim ama yavaş başlangıç yüklemesi</li>
+            <li><strong>Çıkma Oranı (Bounce Rate):</strong> Siteye girip hemen ayrılma yüzdesi</li>
+            <li><strong>Gezinme:</strong> Siteyi ziyaret eden kişilerin siteyi dolaşmasına olanak sağlayan sistem (sadece menü değil, tüm bağlantılar)</li>
+            <li><strong>Bant Genişliği:</strong> İletim ortamı/haberleşme kanalının kapasitesi; bit/saniye cinsinden ölçülür</li>
+            <li><strong>Önbellek:</strong> Web tarayıcısı tarafından kaydedilen dosyalar; sonraki ziyarette daha hızlı yükleme sağlar</li>
+          </ul>
+          <div class="sinav-notu">AJAX = Eşzamansız JS+XML. CSS = HTML dışında görünüm (HTML 4.0 problemini de çözer). Bu soru çıktı! Cevap E (CSS).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">WCAG ve Web Erişilebilirlik Girişimi <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>WAI (Web Accessibility Initiative):</strong> 1997'de W3C tarafından başlatıldı; engelliler için web erişilebilirliğini artırma amacı taşır</li>
+            <li><strong>WCAG 2.0 (Web Content Accessibility Guidelines):</strong> W3C tarafından geliştirilen erişilebilirlik yönergeleri</li>
+            <li><strong>Erişilebilirliğin 4 İlkesi (POUR):</strong> Algılanabilirlik, Çalışabilirlik, Anlaşılabilirlik, Sağlamlık</li>
+            <li><strong>Erişilebilirlik ipuçları:</strong> Kontrast ayarları, min 12px yazı boyutu, hiyerarşik başlıklar, beyaz alanlar, ekran okuyucu uyumluluğu</li>
+            <li>Vestel Venus gibi örnekler: Görme engelliler için kutudan çıktığı andan erişilebilirlik modu</li>
+            <li>JAWS, Kurzweil 1000, Braille yazıcılar = engelliler için yardımcı teknolojiler</li>
+          </ul>
+          <div class="sinav-notu">WCAG = Web İçerik Erişilebilirlik Yönergeleri. WAI = Web Erişilebilirlik Girişimi. POUR ilkeleri sınavda çıkıyor; «Çoğaltılabilirlik» bu ilkelerden DEĞİL!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜNİTE 6 -->
+<div class="page" id="page-unite6">
+  <div class="page-header">
+    <div class="page-title">Ünite 6 — Açık Lisanslar ve Web Reklamcılığı</div>
+    <div class="page-desc">GPL · MIT · Apache · Yaratıcı Beraberlikler · Banner · Mailing · Hosting</div>
+  </div>
+  <div style="padding:28px;">
+    <div class="grid g2">
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--purple);">6</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">Açık Lisans Türleri</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 1-2 soru</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">Lisans Türleri Karşılaştırması <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>GPL (Genel Kamu Lisansı):</strong> Telif bulundurur. Copyleft. Değiştirilmiş kod da açık olmalı.</li>
+            <li><strong>MIT:</strong> Telif bulundurma ZORUNLU DEĞİL. En özgür lisans.</li>
+            <li><strong>Apache:</strong> Telif bulundurma ZORUNLU DEĞİL.</li>
+            <li><strong>Yaratıcı Beraberlikler (Creative Commons):</strong> Telif bulundurur.</li>
+            <li><strong>Telif bulundurması zorunlu olanlar: GPL ve Yaratıcı Beraberlikler</strong></li>
+          </ul>
+          <div class="sinav-notu">Hangi ikisinde telif zorunlu? → GPL + Yaratıcı Beraberlikler. 2024-25 sınavında çıktı! Cevap E.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">GPL Avantaj / Dezavantajları <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Avantajlar:</strong></li>
+            <li>→ Düzeltme süreci çok hızlı gerçekleşebilir</li>
+            <li>→ Kullanıcı yazılımda beğenmediği kısımları değiştirmekte özgür</li>
+            <li>→ Yazılım sektöründe rekabet ortamı yaratır</li>
+            <li>→ Üretici firma kullanıcı kitlesini geliştirmek için büyük şans</li>
+            <li><strong>DEZAVANTAJ (avantaj DEĞİL):</strong></li>
+            <li>→ Kullanıcının, ürünün gelişmesi için üretici firmaya bağımlı olması ❌</li>
+          </ul>
+          <div class="sinav-notu">GPL'nin avantajı DEĞİL olan: "Kullanıcının üretici firmaya bağımlı olması." 2024-25 sınavında çıktı! Cevap E.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">Yaratıcı Beraberlikler (Creative Commons)</div>
+          <ul class="topic-items">
+            <li>Telif hakları alanında esneklik ve paylaşımı yaygınlaştırmak için kurulmuştur</li>
+            <li>Sadece lisanslardan ibaret değil; işaret, etiket ve diğer belgeler de eklenebilir</li>
+            <li>Lisanslı eserlerin internet tarayıcıları tarafından algılanmasını sağlayan elektronik etiket mevcuttur</li>
+            <li>Telif hakkı bulunan eserin ücretsiz dağıtılmasını sağlayan kamu lisansıdır</li>
+            <li><strong>KÂR AMACI GÜTMEZ</strong> (D seçeneği — bu özelliği DEĞİLDİR!)</li>
+          </ul>
+          <div class="sinav-notu">YB'nin özelliği DEĞİL olan: "Kâr amacı gütmesi." 2023-24 sınavında çıktı! Cevap D.</div>
+        </div>
+      </div>
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--amber);">6</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">Web Reklamcılığı ve Hosting</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 1-2 soru</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">Reklamcılık Türleri <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Banner Reklamcılığı:</strong> İnternet siteleri üzerinde belirli bir ücret karşılığında reklam yerleşimlerine ilgili görsel ya da hareketli resimlerin konularak hedef kitleye ulaşmayı hedeflemektedir</li>
+            <li><strong>Mailing:</strong> Birden fazla sayıda internet kullanıcısına aynı anda iletilen tanıtım ya da bilgilendirme amaçlı görsellerden ve metinlerden oluşan e-posta mesajları</li>
+            <li><strong>E-posta Reklamcılığı:</strong> Elektronik posta aracılığıyla gönderilen reklamlar</li>
+          </ul>
+          <div class="sinav-notu">Banner = Görsel/hareketli resimlerin belirli ücretle sitelere yerleştirilmesi. Mailing = Aynı anda çok kişiye gönderilen tanıtım e-postası. 2024-25: Cevap E. 2023-24: Cevap D.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">Hosting ve Güncelleme <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Hosting:</strong> İnternet sitelerini oluşturan dosyaların, web adreslerinden erişilebilmesi için web sunucularında barındırılması</li>
+            <li><strong>Güncelleme:</strong> Ortaya çıkacak resim, flash animasyon, banner, ana sayfa değişikliği, sayfa eklentisi gibi tüm görsel ihtiyaçların yerine getirilmesi</li>
+          </ul>
+          <div class="sinav-notu">Hosting = Barındırma (sunucuda tutma). Güncelleme = İçerik değişikliği. 2021-22 sınavında çıktı! Cevap A (Güncelleme-Hosting).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">Eser Sahibinin Manevi Hakları <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Manevi Haklar:</strong></li>
+            <li>→ Umuma arz hakkı</li>
+            <li>→ Eser sahibinin adını belirtme hakkı ✅</li>
+            <li>→ Eserde değişiklik yapılmasını önleme hakkı</li>
+            <li>→ Malik ve zilyede karşı haklar</li>
+            <li><strong>MALİ Haklar (manevi değil):</strong></li>
+            <li>→ Çoğaltma hakkı ❌, Temsil hakkı ❌, Yayma hakkı ❌, İşleme hakkı ❌</li>
+          </ul>
+          <div class="sinav-notu">Manevi hak = Eser sahibinin adını belirtme hakkı. Çoğaltma, Temsil, Yayma, İşleme = MALİ haklardır! 2024-25: Cevap D.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Patent ve Faydalı Model</div>
+          <ul class="topic-items">
+            <li><strong>Patent Verilebilir:</strong> Bir sorunu çözen teknik buluş ✅</li>
+            <li><strong>Patent Verilemez:</strong> Zihni/ticari/oyun faaliyetleri, keşifler, bilimsel teoriler, matematik metotları</li>
+            <li><strong>Faydalı Model:</strong> Türkiye'de ve dünyada yeni olan ve sanayiye uygulanabilen buluşların sahiplerine belirli bir süre (<strong>10 yıl</strong>) üretme ve pazarlama hakkı tanınması</li>
+            <li>Faydalı model koruması patente kıyasla <strong>daha kısa sürelidir</strong></li>
+          </ul>
+          <div class="sinav-notu">Faydalı model = 10 yıl koruma. Patente göre KISA. 2023-24 sınavında çıktı! Cevap A (Faydalı Model).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Web Tasarım Bileşenlerinin Tarihsel Gelişimi <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>HTML'in Doğuşu:</strong> Tim Berners-Lee tarafından CERN'de 1990'da geliştirildi; ilk versiyon 20 etiket içeriyordu</li>
+            <li><strong>HTML 2.0 (1995):</strong> Standart olarak ele alınan ilk HTML belirtimi; &lt;img&gt; etiketi, &lt;b&gt;, &lt;i&gt; gibi görsel etiketler eklendi</li>
+            <li><strong>W3C:</strong> 1994'te Berners-Lee tarafından CERN'den ayrıldıktan sonra kuruldu; web standartlarını belirler</li>
+            <li><strong>Flash (1996):</strong> FutureSplash Animator → Macromedia Flash 1.0; Microsoft ve Disney tarafından benimsendi; ancak kullanıcılar zamanla bıktı (erişilebilirlik sorunu)</li>
+            <li><strong>CSS (1996):</strong> Basamaklı Stil Şablonları — W3C'nin tavsiyesi oldu; HTML'nin görsel sunumunu CSS'e devretti</li>
+            <li><strong>WYSIWYG:</strong> "What You See Is What You Get" — Ne görürsen onu alırsın; Dreamweaver (Macromedia → Adobe) ve Frontpage örnek</li>
+            <li><strong>Mosaic (1993):</strong> Platformlar arası ilk popüler tarayıcı; Marc Andreesen ve Eric Bina tarafından geliştirildi</li>
+          </ul>
+          <div class="sinav-notu">HTML 2.0 = standart olarak ele alınan İLK versiyon (HTML 1.0 bu statüye ulaşamadı). CSS 1996'da W3C tavsiyesi oldu. Flash Jakob Nielsen'a göre web kullanılabilirliğini ihlal etti.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">Telif Hakları Tarihsel Gelişimi — Detaylar <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>İlk telif fikri:</strong> Yunan ve Roma medeniyeti döneminde; ekonomik hak fikri Gutenberg'in matbaasıyla (1453) ortaya çıktı</li>
+            <li><strong>Kraliçe Anne Kanunu (1709):</strong> Eser sahiplerini koruyan İlk kanun — İngiltere; yazarları ekonomik yönden gözetmek ve bilimi teşvik amaçlı</li>
+            <li><strong>Türkiye — İlk:</strong> 1850 tarihli Encümen-i Daniş Nizamnamesi — "telif" sözcüğü ilk defa burada kullanıldı</li>
+            <li><strong>Hakkı-ı Te'lif Kanunu (1910):</strong> Türkiye'de gerçek anlamda çıkan ilk fikir ve sanat eserleri kanunu (II. Meşrutiyet dönemi) ancak uygulama alanı bulamadı</li>
+            <li><strong>FSEK (5846 sayılı, 1951):</strong> Hakkı-ı Te'lif Kanunu'nun yerini aldı; 1952'de yürürlüğe girdi; 1995'te AB uyumlu değişiklik yapıldı</li>
+            <li>Sınai haklar (marka, patent, tasarım) modern anlamda sanayi devrimi ile doğdu</li>
+          </ul>
+          <div class="sinav-notu">Sıralamayı ezberle: Yunan/Roma → Gutenberg (1453) → Kraliçe Anne (1709) → Encümen-i Daniş (1850) → Hakkı-ı Te'lif (1910) → FSEK (1951/52). 2024-25'te sorulan: İlk kanun hangisi? Cevap = Kraliçe Anne Kanunu.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">Fikri Mülkiyet Kapsamı ve Web Telif Hakları <span class="badge badge-blue">Temel Bilgi</span></div>
+          <ul class="topic-items">
+            <li><strong>Fikri Mülkiyet iki ana kategoriye ayrılır:</strong></li>
+            <li>→ Telif Hakları (copyright): Eserin meydana getirilmesiyle kendiliğinden doğar, tescile gerek yok</li>
+            <li>→ Sınai Mülkiyet: Patent, faydalı model, endüstriyel tasarım, marka — tescil gerektirir</li>
+            <li><strong>Endüstriyel Tasarım:</strong> Ürünün çizgi, şekil, renk, biçim, doku gibi insan duyularıyla algılanan görünümü</li>
+            <li><strong>Web Sitesinde Telif Hakları:</strong> Sadece içerik değil, grafik tasarım ve HTML/CSS kaynak kodları da koruma kapsamında</li>
+            <li>FSEK 2/1: "her biçim altında ifade edilen bilgisayar programları" — HTML kodları da eser sayılır</li>
+            <li>FSEK 6/10-11: Web sitesi, sayfa ve içerik işlenme eser kapsamında sayılır</li>
+            <li><strong>Web'de telif sorunları:</strong> Kolay çoğaltma, sınırların belirsizliği, etkileşimli yapı, hukuki kişiliğin olmaması</li>
+          </ul>
+          <div class="sinav-notu">Telif hakkı tescil GEREKMEz — eserin oluşumuyla doğar. Sınai haklar (marka, patent) ise tescil gerektirir. Web sitesinde HTML kodu da telif hakkıyla korunur.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">Telif Hakları Özellikleri — Kapsamlı Liste <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Tescilsiz doğar</strong> — eser üretildiği anda haklar başlar</li>
+            <li><strong>Soyut niteliğe sahiptir</strong> — maddi olmayan malları korur</li>
+            <li><strong>Ülkesellik ilkesi</strong> — koruma hangi ülkede talep ediliyorsa o ülke mevzuatına göre</li>
+            <li><strong>Mutlak hak</strong> — herkese karşı ileri sürülebilir; ancak kamu yararı, ahlak gibi gerekçelerle sınırlandırılabilir</li>
+            <li><strong>Belirli süre</strong> — eser sahibinin hayatı boyunca + ölümünden 70 yıl</li>
+            <li><strong>Özel kanunla düzenlenir</strong></li>
+            <li><strong>YANLIŞ:</strong> «Somut niteliğe sahiptir» → telif hakları SOYUTtur! ❌</li>
+            <li><strong>Manevi Haklar:</strong> Umuma arz, adın belirtilmesi, değişikliği önleme, malik/zilyede karşı haklar</li>
+            <li><strong>Mali Haklar:</strong> İşleme, çoğaltma, yayma, temsil, umuma iletim hakları</li>
+          </ul>
+          <div class="sinav-notu">Telif hakkı özelliği DEĞİL: «Somut niteliğe sahip olma» — telif hakları soyuttur! 2023-24: Cevap C. Eser sahibinin manevi hakları devredilmez; mali hakları devredilebilir.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">Yaratıcı Beraberlikler (CC) Lisans Türleri — Detay <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>BY:</strong> Sadece eser sahibi belirtilecek; ticari kullanım ve değişiklik serbest</li>
+            <li><strong>BY-SA:</strong> Eser sahibi belirtilecek + aynı lisans korunacak (GNU GPL felsefesine uygun)</li>
+            <li><strong>BY-ND:</strong> Eser sahibi belirtilecek + özgün hal korunacak (değiştirilemez)</li>
+            <li><strong>BY-NC:</strong> Eser sahibi belirtilecek + ticari kullanılamaz</li>
+            <li><strong>BY-NC-SA:</strong> Eser sahibi + ticari yok + aynı lisans</li>
+            <li><strong>BY-NC-ND:</strong> Eser sahibi + ticari yok + özgün hal korunacak (en kısıtlayıcı)</li>
+            <li><strong>Lisans modeli korunması şartı olan:</strong> BY-SA ve BY-NC-SA</li>
+          </ul>
+          <div class="sinav-notu">BY-SA = Lisans modeli korunmalı (SA = ShareAlike). BY-ND = değiştirilemeZ (ND = NoDerivatives). BY-NC = ticari KULLANILAMAZ. Sınavda çıktı: BY-SA lisans modelini koruyan hangisi? Cevap C.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜNİTE 7 -->
+<div class="page" id="page-unite7">
+  <div class="page-header">
+    <div class="page-title">Ünite 7 — Kişisel Verilerin Korunması ve Marka Hukuku</div>
+    <div class="page-desc">KVKK 6698 · Veri Sorumlusu · Marka Koruma · Dijital Deliller · Tescil</div>
+  </div>
+  <div style="padding:28px;">
+    <div class="grid g2">
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--red);">7</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">6698 Sayılı KVKK</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 2-3 soru — KRİTİK!</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">Veri Sorumlusu Tanımı <span class="badge badge-red">Her Yıl Çıkıyor</span></div>
+          <ul class="topic-items">
+            <li>Kişisel bilgileri <strong>kaydeden, saklayan, güncelleyen</strong></li>
+            <li>Mevzuatın izin verdiği durumlarda <strong>3. kişilere açıklayabilen</strong></li>
+            <li>Sınıflandırabilen ve KVKK'da sayılan şekillerde <strong>işleyebilen</strong> kişi</li>
+            <li>= <strong>Veri Sorumlusu</strong></li>
+          </ul>
+          <div class="sinav-notu">Kişisel verileri kaydedip işleyen = Veri Sorumlusu. Marka sahibi, patent sahibi, lisans sahibi DEĞİL. 2024-25: Cevap A.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">KVKK m.11 — Kişinin Hakları <span class="badge badge-red">Her Yıl Çıkıyor</span></div>
+          <ul class="topic-items">
+            <li><strong>KVKK m.11 kapsamındaki haklar:</strong></li>
+            <li>→ Hangi amaçla kullanıldığını öğrenme ✅</li>
+            <li>→ Eksik ya da yanlış işlenmişse düzeltilmesini isteme ✅</li>
+            <li>→ Yurt içinde/yurt dışında aktarıldığı 3. kişileri bilme ✅</li>
+            <li>→ Kanuna aykırı işlenmesi halinde zararın giderilmesini talep etme ✅</li>
+            <li><strong>KAPSAM DIŞI (m.11'de YOK):</strong></li>
+            <li>→ "Öneminin açıklanmasını isteme" ❌</li>
+          </ul>
+          <div class="sinav-notu">"Öneminin açıklanmasını isteme" KVKK m.11'de yoktur. Her iki sınavda da bu soruluyor! 2024-25: Cevap C. 2023-24: Cevap B.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">Dijital Delillerin Özellikleri <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Güvenilirlik:</strong> Verilerin tarafsız ve konuyu yansıtıcı nitelikte olması</li>
+            <li><strong>İnanılırlık:</strong> Delillere duyulan güven</li>
+            <li><strong>Kabul Edilebilirlik:</strong> Mahkemede kabul edilme</li>
+            <li><strong>Bütünlük:</strong> Değiştirilmemiş olma</li>
+            <li><strong>Geçerlilik:</strong> Hukuki geçerlilik</li>
+            <li><strong>Dijital delil özelliği DEĞİL: Güvenilirlik mi? HAYIR — Güvenilirlik var!</strong></li>
+          </ul>
+          <div class="sinav-notu">Dijital delil özelliği DEĞİL olan: "Geçerlilik" değil "Güvenilirlik" değil... Dikkat: Geçerlilik bir özellik DEĞİLDİR bazı kaynaklarda. 2024-25 sınavında: Cevap E (Geçerlilik).</div>
+        </div>
+      </div>
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--amber);">7</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">Marka Hukuku</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 1-2 soru</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">Marka Koruma Süresi <span class="badge badge-red">Her Yıl Çıkıyor</span></div>
+          <ul class="topic-items">
+            <li>Tescilli markanın koruma süresi başvuru tarihinden itibaren <strong>10 yıldır</strong></li>
+            <li>Koruma <strong>10'ar yıllık dönemler</strong> halinde yenilenir</li>
+            <li>Yenileme talebi: Koruma süresinin sona erdiği ayın son gününden önceki <strong>6 ay içinde</strong></li>
+            <li>Türk Patent ve Marka Kurumu tescil süresinin dolacağını haber <strong>vermez</strong> (bu YANLIŞ bir ifadedir!)</li>
+            <li><strong>YANLIŞ ifade:</strong> "Koruma süresi 20 yıldır" → YANLIŞ! 10 yıl!</li>
+          </ul>
+          <div class="sinav-notu">Marka = 10 YIL (patent = 20 yıl). 10'ar yılda yenilenir. 2024-25: Cevap B (10 yıl). 2023-24'te yanlış ifade: "20 yıl" → cevap A yanlıştı. Bu soru çok kritik!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">Fikri Mülkiyet Kavramları <span class="badge badge-blue">Temel Bilgi</span></div>
+          <ul class="topic-items">
+            <li><strong>Fikri Mülkiyet:</strong> İnsan zekasının, yaratıcılığının entelektüel birikiminin ortaya çıkardığı müzik, edebiyat, bilimsel buluşları kapsar</li>
+            <li><strong>Telif Hakları Özellikleri:</strong></li>
+            <li>→ Mutlak hak niteliğine sahip</li>
+            <li>→ Belli bir süre boyunca korunurlar</li>
+            <li>→ Ülkesellik ilkesi geçerlidir</li>
+            <li>→ Özel kanun çerçevesinde düzenlenir</li>
+            <li>→ <strong>SOMUT niteliğe sahip DEĞİLDİR</strong> (soyut haklardır)</li>
+          </ul>
+          <div class="sinav-notu">Telif hakkı özelliği DEĞİL: "Somut niteliğe sahip olma" — telif hakları soyuttur! 2023-24 sınavında çıktı! Cevap C.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">Komşu Haklar (Bağlantılı Haklar)</div>
+          <ul class="topic-items">
+            <li>Eser sahibinin manevi ve mali haklarına zarar vermemek kaydıyla</li>
+            <li>Eseri özgün biçimde yorumlayan, anlatan, söyleyen, çalan icracı sanatçıların hakları</li>
+            <li>İcra ürünü olan sesleri ilk defa tespit eden fonogram yapımcılarının hakları</li>
+            <li>Radyo televizyon kuruluşlarının sahip oldukları haklar</li>
+            <li>= <strong>Komşu Haklar (Şahsi Bağlantı Hakkı değil!)</strong></li>
+          </ul>
+          <div class="sinav-notu">İcracı sanatçı + Fonogram yapımcısı + Radyo-TV kuruluşları = Komşu Haklar. 2023-24: Cevap D.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Fonogram Yapımcısı</div>
+          <ul class="topic-items">
+            <li>Sözlü ya da sözsüz tüm eserlerin <strong>ilk tespitini yapan</strong> ve bu durumun hukuksal sorumluluğunu yüklenen kişi</li>
+            <li>= <strong>Fonogram Yapımcısı</strong></li>
+            <li>Film yapımcısı ≠ Fonogram yapımcısı</li>
+            <li>İcracı sanatçı ≠ Fonogram yapımcısı</li>
+          </ul>
+          <div class="sinav-notu">İlk tespit + hukuksal sorumluluk = Fonogram Yapımcısı. 2024-25: Cevap C.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Lisanslama Stratejileri ve Sözleşmeler <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Lisans:</strong> Fransızca "licence" kelimesinden; tescilli marka, patent veya FSEK kapsamındaki mali hakların kullanım hakkının verilmesi</li>
+            <li><strong>İnhisari Lisans:</strong> Lisans veren başkasına lisans VEREMEz; hakkını açıkça saklı tutmadıkça kendisi de kullanamaz</li>
+            <li><strong>İnhisari Olmayan Lisans:</strong> Hem lisans veren hem başkaları da hakkı kullanabilir</li>
+            <li>FSEK kapsamında mali haklara dair lisans sözleşmesi <strong>yazılı yapılmadıkça geçerli sayılmaz</strong></li>
+            <li><strong>Lisans verilebilir olanlar:</strong> Marka, patent, FSEK'teki mali haklar</li>
+            <li><strong>Lisans VERİLEMEZ:</strong> FSEK'teki manevi haklar (devir ve lisans konusu olamaz)</li>
+          </ul>
+          <div class="sinav-notu">«Lisans verilemez olan nedir?» → FSEK'teki manevi haklar. Cevap A (Gizlilik değil, manevi haklar). İnhisari lisansta lisans veren artık başkasına lisans VEREMEz ve kendisi de kullanamaz.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">Web Sitesi Sözleşmeleri — Temel Kavramlar <span class="badge badge-blue">Temel Bilgi</span></div>
+          <ul class="topic-items">
+            <li><strong>Yazılım Geliştirme Sözleşmesi:</strong> Geliştirici eser üzerindeki tüm mali hakları iş sahibine devretmekle yükümlüdür</li>
+            <li><strong>Web Sitesi Tasarım Sözleşmesi:</strong> Ajans, üretilen tüm materyallerdeki fikri mülkiyet haklarını iş bitiminde açık kod ile devir eder</li>
+            <li><strong>Muvafakatname (Mali Hak Devri):</strong> Makale sahibinin belirli süre ve koşullarla mali haklarını yayıncıya devrettiğini bildiren belge</li>
+            <li><strong>Telife Tabidir Uyarısı:</strong> FSEK m.5846 koruma altında; izinsiz kullanım hapis + telif ücretinin 3 katı tazminat gerektirebilir</li>
+            <li><strong>Flash Animasyon:</strong> Arka arkaya dizilen önceden hazırlanmış resimlerin hareket ediyormuş izlenimi yaratan animasyon geliştirme aracı</li>
+            <li><strong>Sunucu Taraflı Programlama:</strong> İnternet sitesi işlevselliğine kavuşturulması için yapılan programlama çalışmaları</li>
+          </ul>
+          <div class="sinav-notu">Flash Animasyon tanımı sınavda çıktı. Mailing = aynı anda çok kişiye e-posta. Hosting = sunucuda barındırma. Güncelleme = görsel ihtiyaçların yerine getirilmesi.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">Kişisel Verilerin Korunması — Uluslararası Mevzuat <span class="badge badge-blue">Temel Bilgi</span></div>
+          <ul class="topic-items">
+            <li><strong>Kişisel Veri Tanımı:</strong> Kimliği belirli veya belirlenebilir gerçek kişiye ilişkin her türlü bilgi (isim, telefon, parmak izi, sağlık bilgisi, kimlik no)</li>
+            <li><strong>Hassas Kişisel Veri:</strong> Irk, etnik köken, siyasi düşünce, felsefi inanç, din, sağlık, cinsel hayat, sendika üyeliği</li>
+            <li><strong>Uluslararası Mevzuat:</strong> 1980 OECD Rehber İlkeleri, AB Temel Haklar Şartı, BM Evrensel İnsan Hakları Beyannamesi, 108 No'lu Sözleşme, Avrupa Siber Suçlar Sözleşmesi</li>
+            <li><strong>AB Direktifleri:</strong> 95/46/AT (Kişisel Verilerin İşlenmesi), 2002/58/AT (Elektronik İletişimde Gizlilik), 2006/24/AT (Trafik Verilerinin Saklanması)</li>
+            <li><strong>6698 sayılı KVKK:</strong> Türkiye'de yürürlüktedir</li>
+          </ul>
+          <div class="sinav-notu">Hassas veri = ırk, etnik köken, sağlık, cinsel hayat vb. — bunlar ek koruma gerektirir. TCK m.135'e göre hukuka aykırı kayıt = 1-3 yıl hapis; m.136'ya göre veri ifşası = 2-4 yıl hapis.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">TCK'da Kişisel Veri Suçları — Madde Numaraları <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>TCK m.135:</strong> Kişisel verileri hukuka aykırı kaydetme → 1-3 yıl hapis; hassas veri ise +yarı artırım</li>
+            <li><strong>TCK m.136:</strong> Kişisel verileri hukuka aykırı verme, yayma veya ele geçirme → 2-4 yıl hapis</li>
+            <li><strong>TCK m.137:</strong> Yukarıdaki suçların kamu görevlisi veya meslek/sanatın kolaylığıyla işlenmesi → ceza +yarı artırım</li>
+            <li><strong>TCK m.138:</strong> Verileri yok etmeme (silinmemesi suçu) → 1-2 yıl hapis; CMK'ya göre yok edilmesi gereken veri ise +1 kat artırım</li>
+            <li>m.135-138 suçları <strong>şikayete bağlı DEĞİLDİR</strong> — savcılar kendiliğinden harekete geçebilir</li>
+          </ul>
+          <div class="sinav-notu">TCK m.138 = Verilerin silinmemesi suçu (yok etmekle yükümlü olanlar görevini yapmaz). Suçlar şikayete bağlı DEĞİL — savcı re'sen harekete geçer. Sınavda madde numaraları sorulabilir!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">Unutulma Hakkı — Türkiye Uygulaması <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Tanımı:</strong> Dijital hafızada yer alan, bireye ait fotoğraf/kimlik/adres ve diğer kişisel içeriğin, bireyin talebi üzerine <strong>bir daha geri getirilemeyecek biçimde</strong> ortadan kaldırılması</li>
+            <li>Temel olarak geçerli neden yoksa kişisel veriler silinmeli; ancak ifade özgürlüğü, kamu yararı, tarihsel/bilimsel amaçlar için saklama hakkı var</li>
+            <li><strong>Yargıtay HGK 17.06.2015 Kararı (E.2014/4-56, K.2015/1679):</strong> Türkiye'de unutulma hakkını hukuken ilk kez kabul eden üst düzey karar</li>
+            <li>HGK kararına göre: Unutulma hakkı yalnızca dijital veriler için değil, <strong>kamunun kolayca ulaşabileceği tüm kişisel verilere</strong> de uygulanır</li>
+            <li>TC Anayasası m.20: Herkes kendisiyle ilgili kişisel verilerin korunmasını isteme hakkına sahiptir</li>
+          </ul>
+          <div class="sinav-notu">Yargıtay HGK 2015 kararı: Unutulma hakkı = sadece dijital değil, kamuya açık tüm kişisel verilere uygulanır. «Bir daha geri getirilemeyecek biçimde ortadan kaldırma» tanımı kesin ezberle!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">Anonim Kalma Hakkı ve Web'de Kullanıcı Hakları <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Anonim Kalma Hakkı:</strong> Bilgi ve düşüncelerin özgür ifadesini çoğaltmak için kişilerin kimliklerini ifşa etmeme hakkı; özellikle baskıcı rejimlerde muhalifler için elzem</li>
+            <li><strong>İnternet kullanıcı hakları (genel liste):</strong></li>
+            <li>→ İnternet erişimi ve kullanım hakkı</li>
+            <li>→ Bilgi edinme hakkı</li>
+            <li>→ Özel hayatın gizliliği hakkı</li>
+            <li>→ Anonim kalma ve şifreleme kullanma hakkı</li>
+            <li>→ Gözetlenmeme/izlenmeme hakkı</li>
+            <li>→ Unutulma hakkı</li>
+            <li><strong>Web 2.0:</strong> Kullanıcıları tüketici konumundan üreten ve katılım sağlayan duruma geçiren sistem; sosyal medya uygulamalarının hemen tamamı bu kapsamda</li>
+          </ul>
+          <div class="sinav-notu">Web 2.0 = Kullanıcılar artık üreten/paylaşan konumda (aktif). Sınavda: «Kullanıcıları daha aktif yapan sistemi ifade eden kavram nedir?» → Web 2.0. Cevap C.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Dijital Delil — Detaylı Özellikler <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Tanım:</strong> Elektronik ve bilgisayar sistemlerinden elde edilen, hukuki açıdan suç kanıtı olarak kabul edilebilecek veri, bilgi ve bulgular</li>
+            <li><strong>Kapsamı:</strong> Video görüntüleri, fotoğraflar, yazı dosyaları, bilgisayar programları, iletişim kayıtları, dosya erişim tarihleri, internet trafik bilgileri</li>
+            <li><strong>5 Özellik:</strong></li>
+            <li>→ <strong>Kabul Edilebilirlik:</strong> Hukuki kurallara uygun elde edilmeli</li>
+            <li>→ <strong>Gerçeklik:</strong> Olayla ilgili ve diğer belgelerle ilişkilendirilebilir</li>
+            <li>→ <strong>Bütünlük:</strong> Veriler tarafsız ve konuyu yansıtır nitelikte</li>
+            <li>→ <strong>Güvenilirlik:</strong> Toplanması/transferi sırasında bozulmamış olması</li>
+            <li>→ <strong>İnanılırlık:</strong> Mahkeme tarafından inandırıcı ve anlaşılabilir</li>
+            <li><strong>Dijital delil ÖZELLİĞİ DEĞİL:</strong> «Ticarilik» ❌</li>
+          </ul>
+          <div class="sinav-notu">Dijital delil özellikleri: Kabul edilebilirlik, Gerçeklik, Bütünlük, Güvenilirlik, İnanılırlık — hepsi D5 olarak ezberle. «Ticarilik» özellik DEĞİLDİR. Sınavda: Hepsi bir özellik mi? Evet, hepsi (E). Olmayan hangisi? Ticarilik (E).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">Sosyal Medya ve FSEK İlişkisi <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li>Sosyal medya kullanıcıları 3 şekilde içerik paylaşır:</li>
+            <li>→ (i) Kendi orijinal ve hususiyetlerini taşıyan fikri ürünlerini</li>
+            <li>→ (ii) Başkasının eserinden yararlanarak oluşturdukları eseri</li>
+            <li>→ (iii) Başkasının eserini doğrudan</li>
+            <li>Sadece kaynak belirtmek tek başına hukuka uygun kullanım SAĞLAMAZ</li>
+            <li>Mali haklar lisanslanarak (işleme, çoğaltma, umuma iletim) kullanım yapılmalı</li>
+            <li><strong>Parodi istisnası:</strong> Birçok hukuk düzeninde var ancak FSEK'te açıkça yer almaz</li>
+            <li><strong>Alıntı yapmak:</strong> Amacın haklı kıldığı ölçüde ve miktarda kaynak belirterek yapılabilir</li>
+          </ul>
+          <div class="sinav-notu">Sosyal medyada SADECE kaynak belirtmek yeterli DEĞİL — eser sahibinin yazılı izni gerekir. CC lisansları Türkiye'de FSEK m.52 yazılılık şartı nedeniyle tam geçerli değil.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜNİTE 8 -->
+<div class="page" id="page-unite8">
+  <div class="page-header">
+    <div class="page-title">Ünite 8 — Alan Adı Sistemi ve Dijital Hak Yönetimi</div>
+    <div class="page-desc">DNS · ICANN · TRABİS · .tr Uzantıları · DRM · ISBN</div>
+  </div>
+  <div style="padding:28px;">
+    <div class="grid g2">
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--teal);">8</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">Alan Adı Sistemi</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 2-3 soru — KRİTİK!</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">.tr Uzantıları — Doğru Eşleştirme <span class="badge badge-red">Her Yıl Çıkıyor</span></div>
+          <ul class="topic-items">
+            <li><strong>.org.tr</strong> → Vakıf, dernek, sivil toplum örgütü vb. kuruluşlar ✅</li>
+            <li><strong>.edu.tr</strong> → Üniversiteler (MEB onaylı yükseköğretim kurumları)</li>
+            <li><strong>.gov.tr</strong> → T.C. Devlet kurum ve kuruluşları</li>
+            <li><strong>.bel.tr</strong> → Belediyeler</li>
+            <li><strong>.av.tr</strong> → Serbest avukatlar</li>
+            <li><strong>.net.tr</strong> → İnternet servis sağlayıcıları (ISP)</li>
+            <li><strong>.com.tr</strong> → Ticari özel ve tüzel kişiler</li>
+            <li><strong>.info.tr</strong> → Bilgi amaçlı siteler</li>
+          </ul>
+          <div class="sinav-notu">Doğru eşleştirme: .org.tr = Vakıf/dernek. YANLIŞ olanlar: .net.tr ticari DEĞİL, .edu.tr lise DEĞİL, .bel.tr avukat DEĞİL, .av.tr avukat! 2024-25: Cevap A.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Alan Adı Uyuşmazlık Çözümü <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>.tr uzantısı OLAN</strong> alan adları → <strong>TRABİS</strong> (Türkiye)</li>
+            <li><strong>.tr uzantısı OLMAYAN</strong> (.com, .net, .org vb.) → <strong>ICANN</strong> Tahkim Usulü</li>
+            <li>Türkiye'de alan adı yönetimi: <strong>ODTÜ</strong> (eski) → Bilgi Teknolojileri Kurumu</li>
+            <li>İnternet alan adları: Elektronik adres / elektronik ikametgâh işlevi görür</li>
+          </ul>
+          <div class="sinav-notu">.tr olmayan → ICANN. .tr olan → TRABİS. 2024-25: Cevap A (ICANN). Alan adı yönetimi ODTÜ değil BTK, 2023-24'te D (İTÜ) yanlış çıkmıştı!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">Alan Adı Temel Bilgileri</div>
+          <ul class="topic-items">
+            <li>Türkiye'nin alan adı uzantısı: <strong>.tr</strong></li>
+            <li>Alan adları kişileri web sitesine ulaştıran bir çeşit <strong>elektronik adres</strong></li>
+            <li>Bir çeşit elektronik ikametgâh ya da <strong>telefon numarası</strong> işlevi görür</li>
+            <li><strong>DNS:</strong> Domain Name System — IP adreslerini alan adıyla eşleştiren sistem</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="unit-header">
+          <div class="unit-number" style="background:var(--red);">8</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;">DRM ve ISBN</div>
+            <div style="font-size:12px;color:var(--text3);">Her yıl 1-2 soru</div>
+          </div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">DRM Tarafları — Hangisi Değil? <span class="badge badge-red">Her Yıl Çıkıyor</span></div>
+          <ul class="topic-items">
+            <li><strong>DRM (Dijital Hak Yönetimi) Tarafları:</strong></li>
+            <li>→ İçerik Sağlayıcılar ✅</li>
+            <li>→ İçerik Dağıtıcılar ✅</li>
+            <li>→ Teknoloji Sağlayıcılar ✅</li>
+            <li>→ Meslek Birlikleri ✅</li>
+            <li><strong>DRM tarafı DEĞİL olanlar:</strong></li>
+            <li>→ Yer Sağlayıcılar ❌ (2024-25 sınavı)</li>
+            <li>→ Erişim Sağlayıcılar ❌ (2023-24 sınavı)</li>
+            <li>→ Bilişim Sağlayıcılar ❌ (2021-22 sınavı)</li>
+          </ul>
+          <div class="sinav-notu">DRM = 4 taraf: İçerik Sağlayıcı + Dağıtıcı + Teknoloji + Meslek Birliği. Yer/Erişim/Bilişim sağlayıcılar DRM tarafı DEĞİL. Her yıl farklı "değil" soruluyor!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">ISBN Yararları <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>ISBN (International Standard Book Number) Yararları:</strong></li>
+            <li>→ Kütüphane içi sipariş, satın alma ve ödünç verme kolaylaştırır ✅</li>
+            <li>→ Materyal siparişlerine, yazışmalara bibliyografik tarama hız kazandırır ✅</li>
+            <li>→ Dağıtımın hızlı olması, yayımcılar-satıcılar arası ekonomik iletişim ✅</li>
+            <li>→ Barkod üretiminde yoğun kullanıldığı için ticari sistemlere hız ve etkinlik ✅</li>
+            <li><strong>ISBN yararı DEĞİL:</strong></li>
+            <li>→ <strong>Toplu katalogların oluşmasını SAĞLAR</strong> (oluşmamasını değil!) ❌</li>
+          </ul>
+          <div class="sinav-notu">ISBN'nin yararı DEĞİL olan: "Toplu katalogların oluşmamasını sağlar" — tam tersi, OLUŞMASINI SAĞLAR! 2021-22: Cevap A.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">Telif Hakkı Tarihsel Metinler</div>
+          <ul class="topic-items">
+            <li><strong>Cumhuriyet öncesi, ilk telif hakkı metni:</strong> Telif ve Tercüme Nizamnamesi</li>
+            <li>Hakkı-ı Telif Kanunu → Cumhuriyet döneminin ilk telif kanunu</li>
+            <li>Matbaa Nizamnamesi → yayıncılıkla ilgili</li>
+            <li>Telif Nizamnamesi → genel düzenleme</li>
+          </ul>
+          <div class="sinav-notu">Cumhuriyet'ten ÖNCE telif hakkını tanıyan İLK hukuki metin = Telif ve Tercüme Nizamnamesi. 2024-25: Cevap D. Hakkı-ı Telif = Cumhuriyet dönemi.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">Uluslararası Telif Kuruluşları</div>
+          <ul class="topic-items">
+            <li><strong>WIPO</strong> (Dünya Fikri Mülkiyet Örgütü) → Telif hakları ile ilgili ✅</li>
+            <li><strong>UNESCO</strong> (BM Eğitim, Bilim ve Kültür Kurumu) → Telif hakları ile ilgili ✅</li>
+            <li><strong>WTO</strong> (Dünya Ticaret Örgütü) → Telif hakları ile ilgili ✅</li>
+            <li>= Hepsi telif hakları ile ilgili uluslararası kuruluşlardır (I, II ve III)</li>
+          </ul>
+          <div class="sinav-notu">WIPO + UNESCO + WTO = Hepsi telif ile ilgili. 2023-24: Cevap E (I, II ve III).</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">Alan Adı Yapısı ve DNS Sistemi <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Alan Adı:</strong> IP adreslerini akılda kalıcı isimlerle temsil eden sistem (örn: www.btk.gov.tr)</li>
+            <li><strong>DNS (Domain Name System):</strong> Alan adı ile IP sayısal adresini eşleştiren sistem</li>
+            <li><strong>TLD (Top Level Domain — Üst Alan Adı):</strong> İki gruba ayrılır:</li>
+            <li>→ <strong>gTLD (Generic):</strong> .com, .net, .org, .info, .biz, .aero, .name, .coop, .museum, .pro</li>
+            <li>→ <strong>ccTLD (Country Code):</strong> .tr (Türkiye), .de (Almanya), .fr (Fransa), .ch (İsviçre)</li>
+            <li><strong>SLD (Second Level Domain — Alt Alan Adı):</strong> www.İstanbul.com'da "İstanbul" kısmı</li>
+            <li>Türkiye'de ikincil düzey (alt alan adı) modeli benimsenmiştir: .com.tr, .net.tr, .edu.tr vb.</li>
+            <li>Sadece ülke kodundan oluşan alan adı tescil yapılamaz; yan yana alt alan adı gerekir (.biz.tr, .com.tr gibi)</li>
+          </ul>
+          <div class="sinav-notu">gTLD = .com, .net, .org (genel). ccTLD = .tr, .de, .fr (ülke kodu). TLD = üst, SLD = alt. DNS = IP↔Alan adı eşleştirme sistemi.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">ICANN Tahkim Usulü — Kötü Niyetli Tescil Şartları <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>ICANN:</strong> İnternet Tahsisli Sayılar ve İsimler Kurumu — kâr amacı gütmeyen özel sektör kuruluşu; interneti çalıştırmaz, teknik koordinasyonu sağlar</li>
+            <li><strong>Domain Grabbing / Cybersquatting:</strong> Ünlü markaların alan adlarını önceden tescil edip yüklü meblağlarla satmaya çalışmak</li>
+            <li><strong>ICANN Tahkiminde başarı için 3 şart (hepsi birlikte olmalı):</strong></li>
+            <li>→ (i) Alan adı marka ile aynı veya iltibasa mahal verecek şekilde benzer</li>
+            <li>→ (ii) Sahipte alan adı üzerinde herhangi bir hak veya meşru menfaat yok</li>
+            <li>→ (iii) Alan adı kötü niyetli tescil edilmiş ve kullanılmakta</li>
+            <li><strong>Kötü niyet halleri (4 örnek):</strong> Satmak amacıyla tescil, marka sahibini engelleme, rakibe zarar verme, karışıklık yaratarak müşteri çekme</li>
+            <li>ICANN tahkimi: Ortalama <strong>40-45 gün</strong>, internet üzerinden başvuru, pahalı değil (500-5000+ USD)</li>
+          </ul>
+          <div class="sinav-notu">ICANN başvurusu için 3 şartın hepsi kanıtlanmalı. Kötü niyetli kullanım için pozitif hareket şart değil — hareketsiz kalmak da kötü niyet sayılabilir. Sınavda kötü niyet halleri sorulur.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">nic.tr ve TRABİS <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>nic.tr:</strong> 1992'den beri Türkiye'yi internete bağlayan ODTÜ bünyesinde; ".tr" uzantılı alan adlarını yönetir</li>
+            <li>nic.tr'nin görevleri: Başvuruları değerlendirme, idari/mali/teknik işlemler, telefon/mesaj/e-posta desteği</li>
+            <li><strong>Belgeli alan adları (.com.tr, .net.tr, .org.tr vb.):</strong> Başvuranda marka/ticaret unvanı belgesi aranır; "ilk gelen alır" kuralı GEÇERLİ DEĞİL</li>
+            <li><strong>Belgesiz alan adları (.web.tr, .gen.tr, .name.tr):</strong> "İlk gelen alır" kuralı geçerli; tahsis anında gerçekleşir</li>
+            <li><strong>TRABİS:</strong> ".tr" alan adı sisteminin ve merkezi veritabanının işletildiği, gerçek zamanlı başvuru yapılabilen sistem (yönetmelik ve tebliğ çerçevesinde kurulum çalışmaları devam etmektedir)</li>
+          </ul>
+          <div class="sinav-notu">nic.tr = .tr uzantılarını yöneten kurum (ODTÜ bünyesinde). Belgeli .com.tr'de "ilk gelen alır" UYGULANMAZ — belge aranır. TRABİS = .tr alan adı sistemi. Sınavda: nic.tr'nin görevi sorulur. Cevap C.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">Marka Tescili — 6769 Sayılı Sınai Mülkiyet Kanunu <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Marka Tanımı (SMK):</strong> Teşebbüsün mallarını/hizmetlerini ayırt etmeyi sağlayan; sicilde gösterilebilir her tür işaret (sözcük, şekil, renk, harf, sayı, ses, ambalaj biçimi)</li>
+            <li>Tescil başvurusu → <strong>Türk Patent ve Marka Kurumu</strong>'na yapılır; tescil ŞARTTIR</li>
+            <li><strong>Markanın koruma kapsamı:</strong> Tescil edildiği mal/hizmetler ve benzer mal/hizmetlerle sınırlı</li>
+            <li><strong>Korunma ülkeseldir:</strong> Türkiye tescili sadece Türkiye sınırları içinde koruma sağlar</li>
+            <li><strong>Marka koruma süresi: 10 yıl</strong> (10'ar yıllık dönemler halinde yenilenir)</li>
+            <li>Yenileme: Koruma süresinin son gününden önceki <strong>6 ay içinde</strong> talep ve ödeme; kaçırılırsa ek ücretle <strong>6 ay uzatım</strong></li>
+            <li><strong>Marka hakkı sona erer:</strong> Süre dolup yenilenmezse veya marka sahibi vazgeçerse</li>
+            <li>Marka devri: Yazılı şekle tabidir; devir sözleşmesi <strong>noter onaylı</strong> olmalı</li>
+          </ul>
+          <div class="sinav-notu">Marka = 10 YIL (Patent ≠ 20 yıl!). Yenileme = 6 ay öncesinden. Türk Patent ve Marka Kurumu'na başvurulur. Korunma ülkeseldir. Sınavda yanlış seçenek: ".av.tr avukatlar için" DEĞİL "Marka = 20 yıl" dır.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">5651 Sayılı Kanun — İnternet Süjeleri ve Sorumlulukları <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>İçerik Sağlayıcı:</strong> İnternet ortamı üzerinden kullanıcılara sunulan her türlü bilgi veya veriyi <strong>üreten, değiştiren ve sağlayan</strong> gerçek/tüzel kişiler</li>
+            <li>→ Sunduğu her türlü içerikten <strong>sorumludur</strong>; bağlantı sağladığı başkasına ait içerikten <strong>sorumlu DEĞİLDİR</strong> (benimsemediği sürece)</li>
+            <li><strong>Yer Sağlayıcı:</strong> Hizmet ve içerikleri barındıran sistemleri sağlayan/işleten kişiler</li>
+            <li>→ İçeriği kontrol etmekle <strong>yükümlü DEĞİLDİR</strong>; haberdar edildiğinde yayından çıkarmakla <strong>yükümlüdür</strong></li>
+            <li><strong>Erişim Sağlayıcı:</strong> Kullanıcılara internet ortamına erişim imkânı sağlayan kişiler</li>
+            <li>→ İçerik hukuka aykırılığı hakkında haberdar edilince <strong>erişimi engeller</strong>; içeriklerin hukuka uygunluğunu kontrol etmekle <strong>yükümlü DEĞİLDİR</strong></li>
+            <li><strong>Bilgilendirme yükümlülüğü (m.3):</strong> İçerik, yer ve erişim sağlayıcılar tanıtıcı bilgilerini internet ortamında güncel tutmakla yükümlü; yerine getirmezse 2.000-50.000 TL idari para cezası</li>
+          </ul>
+          <div class="sinav-notu">«İnternet ortamı üzerinden kullanıcılara sunulan her türlü bilgiyi üreten kişi kim?» → İçerik Sağlayıcı. Sınavda cevap A. Yer sağlayıcı içeriği kontrol ETMEZ; haberdar olunca kaldırır.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--teal);">
+          <div class="topic-title">5651 — Erişim Engelleme Katalog Suçları <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li>İnternet ortamındaki yayınlar için erişim engelleme kararı verilebilecek suçlar (katalog suçları):</li>
+            <li>→ İntihara yönlendirme (TCK m.84)</li>
+            <li>→ Çocukların cinsel istismarı (TCK m.103/1)</li>
+            <li>→ Uyuşturucu/uyarıcı madde kullanımını kolaylaştırma (TCK m.190)</li>
+            <li>→ Sağlık için tehlikeli madde temini (TCK m.194)</li>
+            <li>→ Müstehcenlik (TCK m.226)</li>
+            <li>→ Fuhuş (TCK m.227)</li>
+            <li>→ Kumar oynanmasına yer/imkân sağlama (TCK m.228)</li>
+            <li>→ Atatürk aleyhine işlenen suçlar (5816 sayılı Kanun)</li>
+            <li><strong>Erişim engelleme kararı:</strong> Soruşturma → hâkim; kovuşturma → mahkeme. Gecikmede savcı karar verebilir, 24 saat içinde hâkim onayına sunar</li>
+          </ul>
+          <div class="sinav-notu">Katalog suçlardan biri: İntihara yönlendirme — sınavda çıktı! Cevap D. «Toplumsal hiciv» veya «dini paylaşım» katalog suçlar arasında YOK.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--accent);">
+          <div class="topic-title">TCK Bilişim Suçları — Madde Numaraları <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>TCK m.243 — Bilişim Sistemine Girme:</strong> Hukuka aykırı olarak sisteme giren/kalan kişiye 1 yıla kadar hapis veya adli para cezası; veri yok olursa/değişirse 6 ay-2 yıl hapis; sistem içi/sistemler arası veri nakillerini izlemek = 1-3 yıl hapis</li>
+            <li><strong>TCK m.244 — Sistemi Engelleme, Bozma, Verileri Yok Etme:</strong></li>
+            <li>→ Sistemi engelleyen/bozan = 1-5 yıl hapis</li>
+            <li>→ Verileri bozan/yok eden/değiştiren/erişilmez kılan = 6 ay-3 yıl hapis</li>
+            <li>→ Banka veya kamu kurumuna ait sistemde işlenirse = +yarı artırım</li>
+            <li>→ Haksız çıkar sağlanırsa = 2-6 yıl hapis + 5.000 güne kadar adli para cezası</li>
+            <li><strong>TCK m.245/A — Yasak Cihaz veya Programlar (2016 eklendi):</strong> Sadece bu bölümdeki suçları işlemek için yapılan/oluşturulan cihaz/program/şifreyi imal eden, satan, bulunduran kişiye 1-3 yıl hapis + 5.000 TL'ye kadar para cezası</li>
+            <li><strong>Sınavda sorulan:</strong> TCK m.10. Bölümde yer ALMAYAN suç → «Verileri yok etmeme» (bu m.138'de)</li>
+          </ul>
+          <div class="sinav-notu">TCK bilişim suçları bölümünde: m.243 (sisteme girme), m.244 (engelleme/bozma/veri yok etme), m.245/A (yasak cihaz). «Verileri yok etmeme» TCK m.138 — bilişim suçları bölümünde DEĞİL. Sınavda cevap C.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--purple);">
+          <div class="topic-title">DRM (Dijital Haklar Yönetimi) — Kapsamlı Bilgi <span class="badge badge-red">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>DRM Tanımı:</strong> Fikri hakların teknik açıdan uygun teknolojik önlemlerle korunması için kullanılan «Dijital Haklar Yönetim Sistemi»</li>
+            <li>DRM'yi ilk kullanan şirket: <strong>IBM (1980)</strong> — bilgisayar oyunları ve programları korumak için</li>
+            <li><strong>Hak Yönetim Bilgisi kapsamı:</strong> Eser üzerinde korunan haklar, eser sahibi ve hak sahiplerinin isimleri, eserin oluşturulma zamanı, tanımlama metotları</li>
+            <li><strong>DRM ile kısıtlanabilecekler:</strong> Belirli sayıda/kişiye erişim, belirli ortamlarda çalma, belirli süre kullanım, kopyalanma sayısı sınırı</li>
+            <li><strong>DRM'ye eleştiriler:</strong> Adil kullanım, fikir-ifade ayrımı, koruma süresi, ilk satış hakkı gibi telif istisna kurallarını geçersiz kılabilmesi</li>
+            <li>Türk hukukunda FSEK'te sadece bilgisayar programları için yetersiz düzenleme var; WIPO anlaşmaları henüz tam uyumlu değil</li>
+            <li><strong>«Hak Yönetim Bilgisi» DEĞİL olan:</strong> «Eserden yararlanacak olan kitle» ❌</li>
+          </ul>
+          <div class="sinav-notu">DRM = IBM 1980'de başlattı. Hak Yönetim Bilgisi içinde «yararlanacak kitle» YOK — sınavda cevap D. DRM 4 tarafı: İçerik Sağlayıcı, İçerik Dağıtıcı, Teknoloji Sağlayıcı, Meslek Birlikleri.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--green);">
+          <div class="topic-title">ISBN, ISSN ve DOI — Kapsamlı Bilgi <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>ISBN (International Standard Book Number):</strong> 1970'te ISO tarafından; 13 rakamlı, 5 küme; kitap, e-kitap, eğitim amaçlı CD/DVD/yazılım için — süreli yayınlara <strong>VERİLMEZ</strong></li>
+            <li>ISBN yapısı: 978 (EAN) + ülke kodu + yayımcı + materyal no + denetim rakamı</li>
+            <li><strong>ISSN (International Standard Serial Number):</strong> 1972'te ISO standardı; 8 haneli, 2 küme; <strong>süreli yayınlar</strong> (dergi, gazete, bülten) için; ücretsiz; Kültür Bakanlığı teşvik eder</li>
+            <li>Elektronik ISSN için basılı ortamda da ayrı ISSN gerekir</li>
+            <li><strong>DOI (Digital Object Identifier — Sayısal Nesne Tanımlayıcısı):</strong> Elektronik belgenin güncel konumuna bağlı olmayan kalıcı tanımlayıcı; bilimsel makale erişimi için; makalenin yeri değişse de DOI değişmez</li>
+            <li>DOI örneği: 10.1000/182 — «10» DOI olduğunu belirtir, «1000» yayımcı no, «182» nesne tanımlayıcısı</li>
+            <li><strong>ISBN telif hakkı koruması SAĞLAMAZ</strong> — yalnızca kimlik/kataloglama sistemidir</li>
+          </ul>
+          <div class="sinav-notu">ISBN = KİTAPLAR için (süreli yayına verilmez). ISSN = SÜRELİ YAYINLAR için. DOI = elektronik belgenin kalıcı adresi (makale değişse de DOI sabit). ISBN ≠ telif koruma sistemi!</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--amber);">
+          <div class="topic-title">Veritabanı Yönetimi ve FSEK Koruması <span class="badge badge-amber">Sınavda Çıkar</span></div>
+          <ul class="topic-items">
+            <li><strong>Veritabanı Tanımı:</strong> Sistematize edilmiş, elektronik veya diğer yollarla bağımsız olarak erişilebilir veri/materyallerden oluşan derleme</li>
+            <li><strong>FSEK'te İki Tür Koruma:</strong></li>
+            <li>→ <strong>Telif hakkıyla koruma:</strong> Sahibinin hususiyetlerini taşıyan veri tabanı — eser sahibinin ömrü +70 yıl</li>
+            <li>→ <strong>Sui Generis koruma (Ek m.8):</strong> Hususiyet taşımasa bile ciddi yatırım yapılmış veri tabanları — aleniyet tarihinden <strong>15 yıl</strong></li>
+            <li>Sui generis korumada önemli değişiklik yapılırsa yeni yatırım yeni 15 yıl koruma hakkı kazanır</li>
+            <li>Veritabanı koruması içeriği DEĞİL, <strong>veritabanının kendisini</strong> korur; içerik ayrıca eser ise ayrıca korunur</li>
+            <li>FSEK m.6/11: Belli bir plan dahilinde verilerin seçilip derlenmesiyle oluşan veritabanları işlenme eser sayılır</li>
+          </ul>
+          <div class="sinav-notu">Veritabanı sui generis koruma = <strong>15 yıl</strong> (telif değil). Telif koruması = eser sahibi ömrü +70 yıl. Veritabanı koruması içeriği kapsamaz — içerik ayrıca korunur. 15 yıl sınavda çıktı! Cevap A.</div>
+        </div>
+        <div class="topic-card" style="border-color:var(--red);">
+          <div class="topic-title">Fikri Mülkiyetin Yönetilmesi — Sosyal Medya FSEK <span class="badge badge-blue">Temel Bilgi</span></div>
+          <ul class="topic-items">
+            <li>FSEK'e göre telif koruması fikri çabaya dayanan ve somutlaşmış ürünleri kapsar — <strong>fikirleri değil, ifadeleri</strong> korur</li>
+            <li>Bir romanın tamamlanmamış bölümleri de eser şartlarını taşıyorsa telif korumasından yararlanır</li>
+            <li><strong>Koruma süresi:</strong> Eser sahibinin hayatı + ölümünden sonra 70 yıl</li>
+            <li>Telif hakkı ihlallerinde erişim kısıtlama ve «uyar-kaldır» prensibi tercih edilir</li>
+            <li><strong>Sınırlama ve İstisnalar («Kullanıcı Hakları»):</strong> Eğitim, haber verme, alıntı, araştırma gibi amaçlarla eser sahibinden izin almadan yararlanma imkânı</li>
+            <li>Bu istisnalar eser sahibinin <strong>mali haklarına</strong> getirilmiştir — manevi haklara dokunulmaz</li>
+            <li><strong>Kullanıcı hakları genel kabul gören bir terim DEĞİLDİR</strong> ancak son yıllarda kullanılmaktadır</li>
+          </ul>
+          <div class="sinav-notu">FSEK fikirleri değil, somutlaşmış ifadeyi korur. Mali hakların istisnası var (eğitim, alıntı vb.) — manevi haklara istisna yok. «Sadece kaynak belirtmek» hukuka uygunluk SAĞLAMAZ.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÇIKMIŞ SORULAR -->
+<div class="page" id="page-cikmisSorular">
+  <div class="page-header">
+    <div class="page-title">Çıkmış Sorular</div>
+    <div class="page-desc">2021–2025 arası 3 sınav döneminin tüm soruları — yıl veya ünite bazlı filtrele</div>
+  </div>
+  <div style="padding:28px;">
+    <div class="tabs" id="cikmisTabs">
+      <div class="tab active" onclick="filterCikmisSorular('all')">Tümü (60)</div>
+      <div class="tab" onclick="filterCikmisSorular('2024-25')">📅 2024-25 (20)</div>
+      <div class="tab" onclick="filterCikmisSorular('2023-24')">📅 2023-24 (20)</div>
+      <div class="tab" onclick="filterCikmisSorular('2021-22')">📅 2021-22 (20)</div>
+    
+    </div>
+    <div id="cikmisSorularContainer"></div>
+  </div>
+</div>
+
+<!-- SINAV MODU -->
+<div class="page" id="page-sinavModu">
+  <div class="page-header">
+    <div class="page-title">Sınav Modu</div>
+    <div class="page-desc">20 soruluk gerçek AÖF formatı — Süreli</div>
+  </div>
+  <div style="padding:28px;">
+    <div id="sinav-start">
+      <div class="card" style="max-width:500px;margin:0 auto;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">⏱️</div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Sınav Moduna Hoş Geldin!</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:24px;">20 soru · 30 dakika · Rastgele sorular<br>Sınav sonunda konu analizi gösterilecek.</div>
+        <button class="btn btn-primary" onclick="startSinav()" style="width:100%;justify-content:center;">Sınavı Başlat</button>
+      </div>
+    </div>
+    <div id="sinav-active" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+        <div style="font-size:13px;color:var(--text2);">Soru <span id="sinav-q-num">1</span> / 20</div>
+        <div class="timer-display" id="sinav-timer">30:00</div>
+        <button class="btn btn-ghost btn-sm" onclick="endSinav()">Sınavı Bitir</button>
+      </div>
+      <div class="progress-bar" style="margin-bottom:24px;"><div class="progress-fill" id="sinav-progress" style="width:5%;"></div></div>
+      <div id="sinav-question-area"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:16px;">
+        <button class="btn btn-primary" onclick="nextSinavSoru()" id="sinav-next-btn" style="display:none;">Sonraki Soru →</button>
+      </div>
+    </div>
+    <div id="sinav-result" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- TAHMİNİ SORULAR -->
+<div class="page" id="page-tahmini">
+  <div class="page-header">
+    <div class="page-title">Tahmini Sorular</div>
+    <div class="page-desc">Kitap analizine göre üretilmiş, çıkma ihtimali yüksek sorular</div>
+  </div>
+  <div style="padding:28px;">
+    <div id="tahmini-container"></div>
+  </div>
+</div>
+
+<!-- HIZLI TEKRAR (FLASH KART) -->
+<div class="page" id="page-hizliTekrar">
+  <div class="page-header">
+    <div class="page-title">Hızlı Tekrar — Flash Kartlar</div>
+    <div class="page-desc">Son gün için kritik kavramları hızlıca gözden geçir. Karta tıkla, cevabı gör.</div>
+  </div>
+  <div style="padding:28px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-size:13px;color:var(--text2);">Kart <span id="fc-idx">1</span> / <span id="fc-total">1</span></div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ghost btn-sm" onclick="fcPrev()">← Önceki</button>
+        <button class="btn btn-ghost btn-sm" onclick="fcNext()">Sonraki →</button>
+      </div>
+    </div>
+    <div class="flashcard" id="fc-card" onclick="flipFC()">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div style="font-size:11px;color:var(--text3);margin-bottom:12px;font-family:var(--mono);">SORU</div>
+          <div style="font-size:15px;font-weight:600;line-height:1.6;" id="fc-question"></div>
+          <div class="fc-hint">Cevap için tıkla ↻</div>
+        </div>
+        <div class="flashcard-back">
+          <div style="font-size:11px;color:var(--green);margin-bottom:12px;font-family:var(--mono);">CEVAP</div>
+          <div style="font-size:14px;font-weight:600;line-height:1.6;" id="fc-answer"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px;justify-content:center;" id="fc-dots"></div>
+    <div style="display:flex;gap:8px;margin-top:20px;justify-content:center;">
+      <button class="btn btn-ghost btn-sm" onclick="fcMarkNo()">✗ Bilmedim</button>
+      <button class="btn btn-ghost btn-sm" onclick="fcMarkOk()">✓ Bildim</button>
+    </div>
+  </div>
+</div>
+
+<!-- GELİŞİM TAKİBİ -->
+<div class="page" id="page-gelisim">
+  <div class="page-header">
+    <div class="page-title">Gelişim Takibi</div>
+    <div class="page-desc">Doğru/yanlış oranı, ünite bazlı analiz ve zayıf konular</div>
+  </div>
+  <div style="padding:28px;" id="gelisim-container"></div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ============ STATE ============
+let isDark = true;
+let stats = {correct:0,wrong:0,exams:0,byUnit:{5:{c:0,w:0},6:{c:0,w:0},7:{c:0,w:0},8:{c:0,w:0}}};
+
+// ============ ÇIKMIŞ SORULAR VERİTABANI ============
+const CIKMIS_QUESTIONS = [
+  // 2024-2025 BAHAR A
+  {id:1,year:'2024-25',unit:5,text:'Aşağıdakilerden hangisi HTML5\'in özelliklerinden biri <b>değildir</b>?',opts:['Modern web uygulamaları geliştirmek için yeni eklentiler ve özellike sunar.','XML belgelerinin uyması gereken kuralları belirlemek için geliştirilmiş bir dildir.','HTML5 ile html dilinin işlevselliği, programlama ve sunum gücü artmıştır.','HTML dilinin en son sürümüdür.','İçerisinde yeni teknolojiler barındırır ya da önceden var olan teknolojilerin kullanımını sağlar.'],ans:1,exp:'HTML5\'in özelliği DEĞİL olan: "XML belgelerinin kurallarını belirlemek için geliştirilmiş bir dil." Bu XML Schema / XSLT\'nin işidir. HTML5 tamamen web içeriği için tasarlanmıştır.'},
+  {id:2,year:'2024-25',unit:5,text:'"Tasarımın kullanımı, kullanıcının tecrübe, bilgi, dil becerileri ya da o anki konsantrasyon ve dikkat düzeyine bağlı olmaksızın kolay anlaşılmalı rahat olmalıdır." ifadesi aşağıdaki evrensel tasarım ilkelerinden hangisi ile ilgilidir?',opts:['Basit ve sezgisel kullanım','Algılanabilir bilgi','Kullanım esnekliği','Hatalara tolerans','Adil kullanım'],ans:0,exp:'Bu tanım BASİT VE SEZGİSEL KULLANIM ilkesidir. Anahtar kelime: "tecrübe, bilgi, dil becerileri ya da dikkat düzeyine bağlı olmaksızın kolay." Bu her düzeydeki kullanıcının anlayabileceği anlamına gelir.'},
+  {id:3,year:'2024-25',unit:5,text:'Aşağıdakilerden hangisi sabit tasarımın avantajlarından biridir?',opts:['Metin tabanlı yerleşimler ve daha basit tasarımlar için uygun olması','Tasarımcının içerik görünümünü kontrol edebilmesi','Daha az yatay kaydırma şansının olması','Birden fazla cihaz için daha fazla esneklik sağlaması','Kullanıcının içerik görünümünü kontrol edebilmesi'],ans:1,exp:'Sabit tasarımın avantajı: TASARIMCInın içerik görünümünü kontrol edebilmesi. Birden fazla cihaz esnekliği SABİT\'in dezavantajıdır. Kullanıcı kontrolü = Esnek tasarım.'},
+  {id:4,year:'2024-25',unit:5,text:'Aşağıdakilerden hangisi erişilebilirliğin ilkelerinden biri <b>değildir</b>?',opts:['Çalışabilirlik','Algılanabilirlik','Sağlamlık','Çoğaltılabilirlik','Anlaşılabilirlik'],ans:3,exp:'Erişilebilirlik 4 ilkesi: Algılanabilirlik + Çalışabilirlik + Anlaşılabilirlik + Sağlamlık (POUR). ÇOĞALTILAB İLİRLİK erişilebilirlik ilkesi DEĞİLDİR.'},
+  {id:5,year:'2024-25',unit:6,text:'Aşağıdakilerden hangisi özellikle insan zekasının, yaratıcılığının entelektüel birikiminin ortaya çıkardığı müzik, edebiyat, bilimsel buluşları kapsamına almaktadır?',opts:['Seçimlik Hak','Alacak Hakkı','Fikri Mülkiyet','Önalım Hakkı','Talep Hakkı'],ans:2,exp:'FİKRİ MÜLKİYET: İnsan zekasının, yaratıcılığının entelektüel birikiminin ortaya çıkardığı müzik, edebiyat, bilimsel buluşları kapsar. Alacak hakkı/Seçimlik hak/Önalım hakkı borçlar hukukuna ait kavramlardır.'},
+  {id:6,year:'2024-25',unit:6,text:'Aşağıdakilerden hangisi Cumhuriyet\'ten önce, telif hakkı kavramına yer veren ve eser sahibine telif hakkını tanıyan ilk hukuki metin olma özelliği taşır?',opts:['Telif Nizamnamesi','Hakkı-ı Telif Kanunu','Telif ve Tercüme Nizamnamesi','Encümen-i Danış Nizamnamesi','Matbaa Nizamnamesi'],ans:2,exp:'Cumhuriyet\'ten ÖNCE telif hakkını tanıyan İLK metin = TELİF VE TERCÜME NİZAMNAMESİ. Hakkı-ı Telif Kanunu = Cumhuriyet dönemi. Matbaa Nizamnamesi = yayıncılıkla ilgili.'},
+  {id:7,year:'2024-25',unit:6,text:'-------, sözlü ya da sözsüz tüm eserlerin ilk tespitini yapan ve bu durumun hukuksal sorumluluğunu yüklenen kişidir.',opts:['Film yapımcısı','İcracı sanatçı','Fonogram yapımcısı','Yayın kuruluşu','Eser sahibi'],ans:2,exp:'FONOGRAM YAPIMCISI: Sözlü ya da sözsüz tüm eserlerin ilk tespitini yapan ve hukuksal sorumluluğu yüklenen kişi. Film yapımcısı görsel eserleri, eser sahibi ise yaratıcıyı ifade eder.'},
+  {id:8,year:'2024-25',unit:6,text:'Aşağıdaki açık lisans türlerinden hangi ikisinde telif bulundurmak zorundadır?',opts:['Apache-Yaratıcı Beraberlikler','GPL-MIT','GPL-Apache','MIT-Apache','GPL-Yaratıcı Beraberlikler'],ans:4,exp:'Telif bulundurması ZORUNLU olanlar: GPL (Genel Kamu Lisansı) + Yaratıcı Beraberlikler. MIT ve Apache telif bulundurma zorunluluğu olmayan permissive lisanslardır.'},
+  {id:9,year:'2024-25',unit:6,text:'Aşağıdakilerden hangisi genel kamu lisansının avantajlarından biri <b>değildir</b>?',opts:['Üretici firmanın kullanıcı kitlesini geliştirmek için büyük bir şansa sahip olması','Düzeltilme sürecinin çok hızlı gerçekleştirilebilmesi','Kullanıcının yazılımda beğenmediği kısımları değiştirmekte özgür olması','Yazılım sektöründe rekabet ortamı yaratması','Kullanıcının, ürünün gelişmesi için üretici firmaya bağımlı olması'],ans:4,exp:'GPL\'nin avantajı DEĞİL olan: "Kullanıcının üretici firmaya bağımlı olması." Bu tam tersi GPL\'nin ruhuna aykırıdır — GPL kullanıcıyı özgür kılar, bağımlı yapmaz!'},
+  {id:10,year:'2024-25',unit:6,text:'Aşağıdakilerden hangisi eser sahibinin manevi haklarından biridir?',opts:['Çoğaltma hakkı','Temsil hakkı','Yayma hakkı','Eser sahibinin adını belirtme hakkı','İşleme hakkı'],ans:3,exp:'MANEVİ HAKLAR: Umuma arz hakkı, adını belirtme hakkı, değişikliği önleme hakkı, malik-zilyede karşı haklar. Çoğaltma, Temsil, Yayma, İşleme = MALİ haklardır!'},
+  {id:11,year:'2024-25',unit:6,text:'Yazı, video, görsel öge gibi unsurların sayfa içerisine yerleştirilmesini ve istenildiği gibi konumlandırılmasını sağlayan zengin metin işaretleme dili aşağıdakilerden hangisidir?',opts:['Widget','Köprü','HTML','W3C','CSS'],ans:2,exp:'HTML: Yazı, video, görsel öge gibi unsurların sayfa içerisine yerleştirilmesini ve konumlandırılmasını sağlayan zengin metin işaretleme dili. CSS görünümü, W3C standart kuruluşunu ifade eder.'},
+  {id:12,year:'2024-25',unit:7,text:'Kişisel bilgileri kaydeden, saklayan, güncelleyen, mevzuatın izin verdiği durumlarda 3. kişilere açıklayabilen, sınıflandırabilen ve Kişisel Verilerin Korunması Kanunu\'nda sayılan şekillerde işleyebilen kişilere ne ad verilir?',opts:['Veri sorumlusu','Marka sahibi','Sözleşme sorumlusu','Patent sahibi','Lisans sahibi'],ans:0,exp:'VERİ SORUMLUSU: KVKK kapsamında kişisel verileri kaydeden, saklayan, güncelleyen, 3. kişilere açıklayabilen, sınıflandırabilen ve işleyebilen kişi. Marka/patent/lisans sahibi fikri mülkiyet kavramlarıdır.'},
+  {id:13,year:'2024-25',unit:7,text:'İnternet sitelerini oluşturan dosyaların, web adreslerinden erişilebilmesi için web sunucularında barındırılmasına ne ad verilir?',opts:['Mailing','Hosting','Güncelleme','Flash Animasyon','Lisans'],ans:1,exp:'HOSTİNG: İnternet sitelerini oluşturan dosyaların, web adreslerinden erişilebilmesi için web sunucularında barındırılması. Mailing = e-posta kampanyası. Güncelleme = içerik değişikliği.'},
+  {id:14,year:'2024-25',unit:7,text:'Aşağıdakilerden hangisi dijital delillerin özelliklerinden biri <b>değildir</b>?',opts:['Güvenilirlik','İnanılırlık','Kabul edilebilirlik','Bütünlük','Geçerlilik'],ans:4,exp:'Dijital delillerin özellikleri: Güvenilirlik + İnanılırlık + Kabul edilebilirlik + Bütünlük. GEÇERLİLİK dijital delillerin spesifik bir özelliği değildir, bu daha çok hukuki bir kavramdır.'},
+  {id:15,year:'2024-25',unit:7,text:'Aşağıdakilerden hangisi 6698 sayılı Kişisel Verilerin Korunması Kanunu\'nun 11. maddesi gereği kişisel veriler ile ilgili sahip olunan haklardan biri <b>değildir</b>?',opts:['Hangi amaçla kullanıldığını öğrenme','Eksik ya da yanlış işlenmişse düzeltilmesini isteme','Öneminin açıklanmasını isteme','Yurt içinde/yurt dışında aktarıldığı 3. kişileri bilme','Kanuna aykırı işlenmesi halinde uğranan zararın giderilmesini talep etme'],ans:2,exp:'"Öneminin açıklanmasını isteme" KVKK m.11\'de yer ALMAZ. KVKK m.11 hakları: Öğrenme, Düzeltme, Silme/yok etme, Aktarım bilgisi, Zarar giderimi, İtiraz gibi haklardır.'},
+  {id:16,year:'2024-25',unit:7,text:'Tescilli markanın koruma süresi başvuru tarihinden itibaren kaç yıldır?',opts:['5','10','15','20','25'],ans:1,exp:'TESCİLLİ MARKA koruma süresi = 10 YIL. 10\'ar yıllık dönemler halinde yenilenir. Patent = 20 yıl (karıştırma!). Yenileme: Süresinin sona erdiği ayın son gününden önceki 6 ay içinde.'},
+  {id:17,year:'2024-25',unit:8,text:'Aşağıdakilerden hangisi Sayısal/Dijital Hak Yönetimi\'nin (DRM) taraflarından biri <b>değildir</b>?',opts:['İçerik sağlayıcılar','İçerik dağıtıcılar','Teknoloji sağlayıcılar','Meslek birlikleri','Yer sağlayıcılar'],ans:4,exp:'DRM 4 tarafı: İçerik Sağlayıcılar + İçerik Dağıtıcılar + Teknoloji Sağlayıcılar + Meslek Birlikleri. YER SAĞLAYICILAR DRM tarafı DEĞİLDİR — onlar hosting hizmeti verenlerdir.'},
+  {id:18,year:'2024-25',unit:8,text:'.tr ibaresi yer almayan uzantıya sahip bir alan adının uyuşmazlık çözümüne yönelik olarak kural ve yöntemleri belirleyen kurum aşağıdakilerden hangisidir?',opts:['ICANN','DNS','TRABİS','FSEK','ODTÜ'],ans:0,exp:'ICANN: .com, .net, .org gibi .tr ibaresi OLMAYAN alan adlarının uyuşmazlık çözümünü yönetir (UDRP = Uniform Domain-Name Dispute-Resolution Policy). TRABİS = .tr uzantılı alan adları.'},
+  {id:19,year:'2024-25',unit:8,text:'Alan adlarıyla ilgili aşağıdaki eşleştirmelerden hangisi doğrudur?',opts:['.org.tr - Vakıf, dernek sivil toplum örgütü vb. kuruluşlar','.net.tr - Ticari özel ve tüzel kişiler','.edu.tr - T.C. MEB\'ce onaylanmış ilköğretim ve liseler','.info.tr - T.C. Devlet kurum ve kuruluşları','.bel.tr - Serbest avukatlar'],ans:0,exp:'.org.tr = Vakıf, dernek, sivil toplum örgütleri. YANLIŞ olanlar: .net.tr ISP\'ler için, .edu.tr üniversiteler için, .gov.tr devlet için, .bel.tr belediyeler için, .av.tr avukatlar için!'},
+  {id:20,year:'2024-25',unit:6,text:'-------, internet siteleri üzerinde belirli bir ücret karşılığında reklam yerleşimlerine ilgili görsel ya da hareketli resimlerin konularak hedef kitleye ulaşmayı hedeflemektedir.',opts:['Televizyon reklamcılığı','Medya reklamcılığı','Web Sitesi','E-posta reklamcılığı','Banner reklamcılığı'],ans:4,exp:'BANNER REKLAMCILIĞI: İnternet siteleri üzerinde belirli bir ücret karşılığında reklam yerleşimlerine görsel ya da hareketli resimlerin konularak hedef kitleye ulaşmayı hedefler. E-posta reklamcılığı = doğrudan posta yoluyla. Mailing = aynı anda çok kişiye e-posta.'},
+  // 2023-2024 BAHAR A
+  {id:20,year:'2023-24',unit:5,text:'------- insan zekasının, yaratıcılığının entelektüel birikimin ortaya çıkardığı müzik, edebiyat, bilimsel buluşları içine alan ürünleri kapsamaktadır.',opts:['Netiket','Derleme eser','Fikri mülkiyet','Multimedya eser','Fonogram'],ans:2,exp:'FİKRİ MÜLKİYET: Müzik, edebiyat, bilimsel buluşları içine alan ürünleri kapsar. Netiket = internet görgü kuralları. Derleme eser = derleme. Fonogram = ses kaydı.'},
+  {id:21,year:'2023-24',unit:5,text:'Seri üretimin başlaması ve seri üretim bantlarının endüstriye entegrasyonu, hangi büyük sanayi devrimi olarak tanımlanmıştır?',opts:['Endüstri 1.0','Endüstri 2.0','Endüstri 3.0','Endüstri 4.0','Endüstri 5.0'],ans:1,exp:'ENDÜSTRİ 2.0: Seri üretim ve seri üretim bantlarının endüstriye entegrasyonu. Endüstri 1.0 = Buhar/su gücü. Endüstri 3.0 = Dijitalleşme/bilgi teknolojileri. Endüstri 4.0 = Sanal+gerçek süreçler.'},
+  {id:22,year:'2023-24',unit:5,text:'Aşağıdakilerden hangisi web sayfa tasarımında renk, boyut, arka plan resmi, sayfadaki konum gibi özelliklerin kontrol edilmesini sağlamaktadır?',opts:['PNG','WAP','W3C','DOM','CSS'],ans:4,exp:'CSS (Cascading Style Sheets): Web sayfa tasarımında renk, boyut, arka plan resmi, konum gibi görsel özelliklerin kontrol edilmesini sağlar. W3C = standart kuruluşu. DOM = Document Object Model.'},
+  {id:23,year:'2023-24',unit:5,text:'Kullanıcının bilgisayarında çalışan komut dosyalarına karşılık gelen kavrama ne ad verilir?',opts:['Çıkma Oranı','Bant Genişliği','İstemci Taraflı','Ön Yüz','Bağlantı Metni'],ans:2,exp:'İSTEMCİ TARAFLI: Kullanıcının (istemci) bilgisayarında çalışan komut dosyaları (örn: JavaScript). Sunucu taraflı = sunucuda çalışan (PHP, Python vb.). Bant genişliği = kapasite.'},
+  {id:24,year:'2023-24',unit:6,text:'Aşağıdakilerden hangisi yaratıcı beraberlikler lisansına ait özelliklerden biri <b>değildir</b>?',opts:['Yaratıcı beraberlikler araçlarının sadece lisanslardan ibaret olmayıp buna kimi işaret, etiket ve diğer belgelerin de eklenebilmesi','Telif hakları alanında esneklik ve paylaşımı yaygınlaştırmak amacıyla kurulmuş olması','Yaratıcı beraberlikler lisanslı eserlerin İnternet tarayıcı programlar tarafından algılanmasını sağlayan elektronik etiketin mevcut olması','Kâr amacı gütmesi','Telif hakkı bulunan bir eserin veya çalışmanın ücretsiz olarak dağıtılmasını sağlayan bir çeşit kamu lisansı olması'],ans:3,exp:'Yaratıcı Beraberlikler\'in özelliği DEĞİL olan: "Kâr amacı gütmesi." Creative Commons KÂR AMACI GÜTMEZ. Diğer tüm seçenekler gerçek özelliklerdir.'},
+  {id:25,year:'2023-24',unit:6,text:'Birden fazla sayıda internet kullanıcısına aynı anda iletilen tanıtım ya da bilgilendirme amaçlı görsellerden ve metinlerden oluşan e-posta mesajlarına ne ad verilir?',opts:['Listeleme','Güncelleme','Kopyalama','Mailing','Hosting'],ans:3,exp:'MAİLİNG: Birden fazla internet kullanıcısına aynı anda iletilen tanıtım/bilgilendirme e-posta mesajları. Hosting = web barındırma. Güncelleme = içerik değişikliği.'},
+  {id:26,year:'2023-24',unit:6,text:'------- Türkiye\'de ve dünyada yeni olan ve sanayiye uygulanabilen buluşların sahiplerine belirli bir süre (10 yıl), bu buluş konusu ürünü üretme ve pazarlama hakkının tanınmasıdır.',opts:['Faydalı Model','Endüstriyel Tasarım','Telif Hakkı','Ticari Sır','Fikri Hak'],ans:0,exp:'FAYDALI MODEL: Türkiye\'de ve dünyada yeni, sanayiye uygulanabilen buluşlar için 10 yıl koruma. Patent = 20 yıl. Faydalı model daha kısa ama daha kolay alınır.'},
+  {id:27,year:'2023-24',unit:6,text:'Aşağıdakilerden hangisi telif haklarının özelliklerinden biri <b>değildir</b>?',opts:['Mutlak hak niteliğine sahip olmaları','Belli bir süre boyunca korunmaları','Somut niteliğe sahip olmaları','Özel kanun, tüzük ve yönetmelikler çerçevesinde düzenlenmeleri','Ülkesellik ilkesinin geçerli olması'],ans:2,exp:'Telif hakkı özelliği DEĞİL: "Somut niteliğe sahip olma." Telif hakları SOYUT haklardır — bir eser, fikir, müzik gibi maddi olmayan şeyleri korur. Mutlak hak, süre sınırı, ülkesellik = gerçek özellikler.'},
+  {id:28,year:'2023-24',unit:7,text:'Aşağıdakilerden hangisi 6698 sayılı Kişisel Verilerin Korunması Kanunu\'nun 11. maddesi gereği kişisel veriler ile ilgili sahip olunan haklardan biri <b>değildir</b>?',opts:['Hangi amaçla kullanıldığını öğrenme','Öneminin açıklanmasını isteme','Yurt içinde/yurt dışında aktarıldığı 3. kişileri bilme','Eksik ya da yanlış işlenmişse düzeltilmesini isteme','Kanuna aykırı işlenmesi halinde uğranan zararın giderilmesini talep etme'],ans:1,exp:'"Öneminin açıklanmasını isteme" KVKK m.11\'de YOK. Bu soru her yıl soruluyor! Gerçek haklar: Öğrenme, Düzeltme, Silme, 3. kişileri bilme, Zarar giderimi.'},
+  {id:29,year:'2023-24',unit:7,text:'Markanın koruma süresiyle ilgili aşağıdaki ifadelerden hangisi <b>yanlıştır</b>?',opts:['Tescilli markanın koruma süresi başvuru tarihinden itibaren 20 yıldır.','Markanın koruması 10\'ar yıllık dönemler halinde yenilenir.','Koruma süresi sona eren marka, sahibinin veya onun yetkili kıldığı vekilin talebi ve yenileme ücretinin ödenmesi koşuluyla yenilenir.','Türk Patent ve Marka Kurumu tescil süresinin dolacağını marka hakkı sahibine haber verir.','Yenileme talebinin yapılması ve yenileme ücretinin ödenmesi koruma süresinin sona erdiği ayın son gününden önceki 6 ay içinde gerçekleştirilir.'],ans:0,exp:'YANLIŞ ifade: "Tescilli markanın koruma süresi 20 yıldır." DOĞRUSU: 10 YIL! Patent 20 yıl. Marka 10 yıl ve 10\'ar yılda yenilenebilir.'},
+  {id:30,year:'2023-24',unit:8,text:'Aşağıdakilerden hangisi Dijital Hak Yönetimi (DRM) taraflarından biri <b>değildir</b>?',opts:['İçerik sağlayıcılar','İçerik dağıtıcılar','Teknoloji sağlayıcılar','Meslek birlikleri','Erişim sağlayıcılar'],ans:4,exp:'DRM 4 tarafı: İçerik Sağlayıcı + Dağıtıcı + Teknoloji Sağlayıcı + Meslek Birliği. ERİŞİM SAĞLAYICILAR (ISP\'ler) DRM\'nin tarafı değildir — onlar internet bağlantısı sağlarlar.'},
+  {id:31,year:'2023-24',unit:8,text:'Alan adı bilgisiyle ilgili aşağıdaki ifadelerden hangisi <b>yanlıştır</b>?',opts:['Türkiye\'nin internet alan adı uzantısı ".tr" dir.','.com, .net, .org ve benzerleri şeklinde .tr ibaresi yer almayan uzantıya sahip bir alan adı için sorun çıktığında bunun çözümü ICANN Tahkim Usulüdür.','İnternet alan adları kişileri elektronik ortamda ulaşmak istediği web sitesine ulaştıran bir çeşit elektronik adres niteliğindedir.','Türkiye\'de internet alan adlarının yönetimi ve koordinasyonu ile ilgili yetkilendirilen kuruluş İTÜ\'dür.','İnternet alan adları bir çeşit elektronik ikametgah ya da telefon numarası işlevini görür.'],ans:3,exp:'YANLIŞ: "Yetkilendirilen kuruluş İTÜ\'dür." DOĞRUSU: Türkiye\'de alan adı yönetimi için yetkilendirilen kuruluş ODTÜ\'dür (daha doğrusu Bilgi Teknolojileri Kurumu — BTK). İTÜ yanlış.'},
+  {id:32,year:'2023-24',unit:5,text:'I. Dünya Fikri Mülkiyet Örgütü (WIPO) II. Birleşmiş Milletler Eğitim, Bilim ve Kültür Kurumu (UNESCO) III. Dünya Ticaret Örgütü (WTO) — Yukarıdakilerden hangisi veya hangileri telif hakları ile ilgili uluslararası kuruluşlardır?',opts:['Yalnız I','Yalnız II','I ve II','II ve III','I, II ve III'],ans:4,exp:'WIPO (Dünya Fikri Mülkiyet Örgütü) + UNESCO (Eğitim/Bilim/Kültür - kültürel eserleri destekler) + WTO (Dünya Ticaret Örgütü - TRIPs anlaşması kapsamında) — HEPSİ telif hakları ile ilgili uluslararası kuruluşlardır.'},
+  {id:33,year:'2023-24',unit:5,text:'Aşağıdakilerden hangisi çoklu sözleşmelerle ortaya çıkan ve telif haklarının uluslararası nitelikteki temel ilkelerden biri <b>değildir</b>?',opts:['Evrensellik ilkesi','Eşit işlem İlkesi','Karşılıklılık ilkesi','Tükenme ilkesi','Asgari haklar ilkesi'],ans:0,exp:'Uluslararası telif haklarının temel ilkeleri: Eşit işlem ilkesi + Karşılıklılık ilkesi + Tükenme ilkesi + Asgari haklar ilkesi. EVRENSELLİK İLKESİ bu listede yer almaz — o daha çok insan hakları hukukuna aittir.'},
+  {id:34,year:'2023-24',unit:5,text:'------- eser sahibinin manevi ve mali haklarına zarar vermemek kaydıyla ve eser sahibinin izniyle bir eseri özgün bir biçimde yorumlayan, tanıtan, anlatan, söyleyen, çalan ve çeşitli biçimlerde icra eden sanatçıların, bir icra ürünü olan veya sair sesleri ilk defa tespit eden fonogram yapımcıları ile radyo televizyon kuruluşlarının sahip oldukları haklardır.',opts:['Umum','Derleme eser hakkı','Şahsi bağlantı hakkı','Komşu haklar','Asgari haklar'],ans:3,exp:'KOMŞU HAKLAR: Eser sahibinin haklarına bağlantılı olan; icracı sanatçıların, fonogram yapımcılarının ve yayın kuruluşlarının sahip olduğu haklardır. Eser sahibinin hakları kadar güçlü olmasa da benzer koruma sağlar.'},
+  {id:35,year:'2023-24',unit:5,text:'Eserin ilk defa umuma arzı hakkı ile ilgili aşağıdaki ifadelerden hangisi <b>yanlıştır</b>?',opts:['Eserin ilk defa umuma arzı hakkı ile eserin yayımlanıp yayımlanmayacağına karar verecek olan eser sahibinin kendisidir.','Umuma arz bir defa gerçekleştikten sonra eserin yeniden umuma arzı mümkündür.','Eser ana hatlarıyla umuma tanıtılmamışsa o eserin içeriği hakkında bilgiyi ancak o eserin sahibi verebilir.','Eğer eserin umuma arz edilme tarzı, sahibinin şeref ve itibarını zedeleyecek şekilde ise eser sahibi engelleyebilir.','Bir eserin eser sahibinin izni olsun ya da olmasın bir kere sahnelenmesiyle umuma arzıyla fiil tamamlanmış olur.'],ans:4,exp:'YANLIŞ: "İzni olsun ya da olmasın sahnelenmesiyle umuma arzı tamamlanmış olur." DOĞRUSU: Umuma arz için eser sahibinin İZNİ şarttır. İzinsiz sahneleme hak ihlalidir, umuma arz sayılmaz.'},
+  {id:36,year:'2023-24',unit:6,text:'Telif haklarında haksız fiiller bakımından zaman aşımı süresi kaç yıldır?',opts:['0-2 yıl','1-6 yıl','2-10 yıl','5-12 yıl','5-15 yıl'],ans:1,exp:'Telif haklarında haksız fiiller bakımından zaman aşımı süresi: 1-6 YIL. En az 1 yıl, en fazla 6 yıl. Bu süre, zarar görenin zararı ve failini öğrenmesinden itibaren 1 yıl; her hâlde fiilin işlenmesinden itibaren 6 yıldır.'},
+  {id:37,year:'2023-24',unit:5,text:'Zengin meta verilerini Web belgelerine yerleştirmek için HTML, XHTML ve çeşitli XML tabanlı belge türlerine öznitelik düzeyinde uzantılar ekleyen W3C önerisine ne ad verilir?',opts:['RSS','SVG','PDF','XSLT','RDFa'],ans:4,exp:'RDFa (Resource Description Framework in Attributes): Zengin meta verilerini Web belgelerine yerleştirmek için HTML, XHTML ve XML tabanlı belgelere öznitelik düzeyinde uzantılar ekleyen W3C önerisidir. RSS = haber beslemesi. SVG = vektör grafik.'},
+  {id:38,year:'2023-24',unit:5,text:'Aşağıdakilerden hangisine patent verilebilir?',opts:['Bir sorunu çözen teknik buluş','Zihni, ticari ve oyun faaliyetlerine ilişkin plan, usul ve kurallar','Keşifler','Bilimsel teoriler','Matematik metotları'],ans:0,exp:'PATENT VERİLEBİLİR: Bir sorunu çözen teknik buluş. PATENT VERİLEMEZ: Zihni/ticari/oyun faaliyetleri, keşifler, bilimsel teoriler, matematik metotları, soyut fikirler. Teknik uygulanabilirlik şarttır.'},
+  {id:39,year:'2023-24',unit:5,text:'Aşağıdakilerden hangisi sabit tasarımın avantajlarından birisidir?',opts:['Birden fazla cihaz için daha fazla esneklik sağlar.','Metin uzunluğu üzerinde daha fazla kontrol sağlar.','Daha az yatay kaydırma şansı vardır.','Kullanıcı içerik görünümünü kontrol eder.','Metin tabanlı yerleşimler ve daha basit tasarımlar için uygundur.'],ans:1,exp:'Sabit tasarım avantajı: Metin uzunluğu üzerinde daha fazla KONTROL sağlar (tasarımcı kontrolü). Birden fazla cihaz esnekliği = esnek tasarım. Kullanıcı kontrolü = esnek tasarım. Az yatay kaydırma = esnek tasarım.'},
+  // 2021-2022 BAHAR A
+  {id:48,year:'2021-22',unit:5,text:'Aşağıdakilerden hangisi Endüstri 4.0\'a ait özeliklerden biridir?',opts:['Buharın ve suyun gücünün sanayiye katılması','Üretimin sanal ve reel süreçlerin bir arada kullanılarak gerçekleştirilmesi','Seri üretim bantlarının endüstriye entegrasyonun sağlanması','Dijitalleşme ile birlikte bilgi teknolojilerinin sanayide kullanımının sağlanması','Seri üretimin başlaması'],ans:1,exp:'ENDÜSTRİ 4.0: Üretimin SANAL ve REEL süreçlerin bir arada kullanılarak gerçekleştirilmesi (Cyber-Physical Systems). Buhar/su = 1.0. Seri üretim = 2.0. Dijitalleşme = 3.0.'},
+  {id:49,year:'2021-22',unit:5,text:'I. Sinerjik ekonomi II. Sınıflı toplum III. Katılımcı demokrasi — Yukarıdakilerden hangileri "Bilgi Toplumu"nun sosyo-ekonomik yapısına ait özelliklerdendir?',opts:['Yalnız I','I ve II','I ve III','II ve III','I, II ve III'],ans:2,exp:'Bilgi Toplumu\'nun özellikleri: SİNERJİK EKONOMİ (I) + KATILIMCI DEMOKRASİ (III). Sınıflı toplum bilgi toplumunun özelliği değildir.'},
+  {id:50,year:'2021-22',unit:5,text:'I. Bir ekranda görüntülenen fiziksel piksel sayısını gösterir. II. Bir web sayfasından diğerine, aynı sitede veya başka bir web sayfasındaki bir bağlantıdır. III. Özel gereksinimli bireylerin kullanabileceği bir web sitesi yeteneğidir. — Yukarıda verilen tanımlara karşılık gelen kavramlar sırasıyla hangisidir?',opts:['Çıkma oranı, köprü, gezinme','Ajax, bağlantı metni, istemci taraflı','Çözünürlük, köprü, erişilebilirlik','Çözünürlük, bağlantı metni, ön yüz','Bant genişliği, çıkma oranı, erişilebilirlik'],ans:2,exp:'I = ÇÖZÜNÜRLÜK (piksel sayısı). II = KÖPRÜ (hyperlink). III = ERİŞİLEBİLİRLİK (özel gereksinimli bireyler). Sıralama: Çözünürlük-Köprü-Erişilebilirlik.'},
+  {id:51,year:'2021-22',unit:5,text:'------- herhangi bir iletim ortamının ya da haberleşme kanalının kapasitesini ifade etmek için kullanılır.',opts:['Üst Veriler','Bant Genişliği','İstemci Taraflı','Bağlantı Metni','Çıkma Oranı'],ans:1,exp:'BANT GENİŞLİĞİ: Herhangi bir iletim ortamının ya da haberleşme kanalının kapasitesini ifade eden terim. Bit/saniye cinsinden ölçülür.'},
+  {id:52,year:'2021-22',unit:5,text:'I. İçeriği soldan dikey hareketle tarar. II. Sayfanın üst kısmını okumuşlardır. III. Sayfayı biraz aşağı kaydırarak sayfayı tekrar arar. — Nielsen\'e göre F tabanlı okuma düzeni için doğru sıralama hangisidir?',opts:['I, II, III','I, III, II','II, I, III','II, III, I','III, II, I'],ans:3,exp:'F-Tabanlı okuma sırası: 1. Üst kısım (II) → 2. Aşağı kaydır ve ara (III) → 3. Dikey tara (I). Doğru sıra: II → III → I.'},
+  {id:53,year:'2021-22',unit:5,text:'------- W3C ve diğer standart oluşumları tarafından bir araya getirilmiş olan web tabanlı içeriğin yaratılmasında ve çözümlenmesinde kullanılan teknolojilerdir.',opts:['CERN Tarayıcıları','Web Standartları','Endüstriyel Tasarım','Faydalı Model','Ticari Sır'],ans:1,exp:'WEB STANDARTLARI: W3C ve diğer standart oluşumları tarafından bir araya getirilmiş, web tabanlı içeriğin yaratılmasında ve çözümlenmesinde kullanılan teknolojiler.'},
+  {id:54,year:'2021-22',unit:5,text:'I. Manevî haklar - umuma arz hakkı II. Manevî haklar - temsil hakkı III. Malî haklar - eser sahibinin malik ve zilyede karşı hakları IV. Malî haklar - yayma hakkı — Eser sahibinin doğru eşleştirmeleri hangileridir?',opts:['I ve II','I ve IV','II ve III','I, III ve IV','II, III ve IV'],ans:1,exp:'DOĞRU eşleştirmeler: I (Manevi - Umuma arz) ✅ + IV (Mali - Yayma hakkı) ✅. Temsil hakkı MALİ, malik/zilyede karşı haklar MANEVİ haklardandır.'},
+  {id:55,year:'2021-22',unit:6,text:'I- Eser sahibinin hakları II- Bağlantılı haklar III-Endüstriyel tasarım IV-Faydalı model — Hangileri fikri haklar (telif hakları) arasında yer alır?',opts:['I ve II','I ve III','II ve III','III ve IV','I, II, III ve IV'],ans:0,exp:'Fikri haklar (telif hakları): Eser sahibinin hakları (I) + Bağlantılı haklar (II). Endüstriyel tasarım ve Faydalı model = Sınai mülkiyet haklarıdır.'},
+  {id:56,year:'2021-22',unit:6,text:'Aşağıdakilerden hangisi Bern Sözleşmesiyle ilgili doğru <b>değildir</b>?',opts:['9 Eylül 1886\'da Paris\'te imzalanmıştır.','Amacı, üye ülkelerde eser sahiplerinin eserleri üzerindeki haklarının uluslararası düzeyde korunmasıdır.','Üye ülkelerde etkin korumanın asgari haklar çerçevesinde sağlanması hedeflenir.','Asgari haklar ilkesinin yanında karşılıklılık ilkesi ve eşit işlem ilkesi de benimsenmiştir.','Sözleşme, telif hakları, ticari markalar, coğrafi işaretler, tasarımlar, ticari sırları kapsamaktadır.'],ans:0,exp:'YANLIŞ: "9 Eylül 1886\'da PARİS\'te imzalanmıştır." DOĞRUSU: BERN\'de imzalanmıştır (İsviçre)! Ticari markalar vb. = TRIPs kapsamı, Bern değil.'},
+  {id:57,year:'2021-22',unit:6,text:'Aşağıdakilerden hangisi Fonogram Yapımcılarının Mali Haklarından biridir?',opts:['Tespit','Eş zamanlı, gecikmeli ve yeniden iletim','Uydu veya kablo ile dağıtım','Umuma açık yerlerde iletme','Tespitin satılması, dağıtılması, kiralanması'],ans:4,exp:'Fonogram Yapımcılarının MALİ hakkı: Tespitin satılması, dağıtılması, kiralanması. Eş zamanlı/gecikmeli iletim = Yayın kuruluşlarının hakkı.'},
+  {id:58,year:'2021-22',unit:6,text:'I- Algoritma II- Program akışı III- Kullanıcı arayüzü IV- Kaynak ve nesne kodu — Hangileri bilgisayar programlarının FSEK koruması altındadır?',opts:['Yalnız I','I ve III','II ve IV','III ve IV','I, II, III ve IV'],ans:4,exp:'FSEK koruma kapsamı: Algoritma (I), program akışı (II), kullanıcı arayüzü (III), kaynak ve nesne kodu (IV) — HEPSİ FSEK koruması altındadır.'},
+  {id:59,year:'2021-22',unit:7,text:'Verilerin tarafsız ve konuyu yansıtıcı nitelikte olması "dijital delillerin" hangi özelliği ile ilgilidir?',opts:['Gerçeklik','Güvenirlik','Kabul edilebilirlik','Bütünlük','İnanılırlık'],ans:1,exp:'GÜVENİRLİK: Dijital delillerin tarafsız ve konuyu yansıtıcı nitelikte olması. Bütünlük = değiştirilmemiş olma. İnanılırlık = delile duyulan genel güven.'},
+  {id:60,year:'2021-22',unit:7,text:'Fikri mülkiyet hakları kapsamında bulunan kavramlar ile ilgili verilen aşağıdaki bilgilerden hangisi doğrudur?',opts:['Patent sahibine ait haklar izinsiz kullanılabilir.','Ticari sır yalnızca tüzel kişi tacirine karşı ekonomik menfaat sağlar.','Endüstriyel tasarım bir işletmenin hizmetlerini diğerinden ayırt etmeyi sağlar.','Telif hakkının doğması için tescile gerek vardır.','Faydalı model belgesi verilerek sağlanan koruma, patente kıyasla daha kısa sürelidir.'],ans:4,exp:'DOĞRU: Faydalı model = Patente kıyasla DAHA KISA süreli koruma (10 yıl vs 20 yıl). Telif için tescil GEREKMEZ. Patent izinsiz kullanılamaz.'},
+  {id:61,year:'2021-22',unit:7,text:'Gülsüm Burcu bir web sitesinde bir süper kahramanın adıyla hesap almıştır. Buna göre internet ortamındaki sahip olduğu hakların hangisinden yararlanmıştır?',opts:['Gizlilik hakkı','Unutulma hakkı','Anonim hakkı','Talep hakkı','Telif hakkı'],ans:2,exp:'ANONİM HAKKI: Gerçek kimliğini gizleyerek bir takma ad veya başka bir isimle internette faaliyet gösterme hakkıdır.'},
+  {id:62,year:'2021-22',unit:8,text:'-------- ortaya çıkacak resim, flash animasyon, banner gibi tüm görsel ihtiyaçların yerine getirilmesidir. -------, internet Sitelerini oluşturan dosyaların web adreslerinden erişilebilmesi için web sunucularında barındırılmasını ifade eder.',opts:['Güncelleme - Hosting','Mailing - Güncelleme','Hosting - Mailing','Güncelleme - Mailing','Mailing - Hosting'],ans:0,exp:'1. boşluk = GÜNCELLEME (görsel içerik değişikliği). 2. boşluk = HOSTİNG (sunucuda barındırma). Mailing = toplu e-posta kampanyası.'},
+  {id:63,year:'2021-22',unit:8,text:'5651 sayılı Kanunun 8. maddesine göre verilen listeden kaç tanesi internet ortamında işlenmesi durumunda erişim engellenebilecek suçlar kapsamındadır? (İntihara yönlendirme, Kasten öldürme, Fuhuş, Tefecilik, Çevrenin kasten kirletilmesi, Sağlık için tehlikeli madde temini, Dolandırıcılık, Çocukların cinsel istismarı, Şirket/Kooperatifler hakkında yanlış bilgi, Müstehcenlik, Trafik güvenliğini tehlikeye sokma, Resmi belgenin düzenlenmesinde yalan beyan)',opts:['5','6','7','8','9'],ans:3,exp:'5651 sayılı Kanun m.8 kapsamındaki suçlar listeden: İntihara yönlendirme, Fuhuş, Sağlık için tehlikeli madde temini, Çocukların cinsel istismarı, Müstehcenlik ve diğerleri. Listeden 8 tanesi kapsama girer.'},
+  {id:64,year:'2021-22',unit:8,text:'Aşağıdakilerden hangisi DRM\'nin (Digital Rights Management) taraflarından biri <b>değildir</b>?',opts:['Teknoloji Sağlayıcılar','İçerik Sağlayıcılar','Meslek Birlikleri','Bilişim Sağlayıcılar','İçerik Dağıtıcılar'],ans:3,exp:'DRM 4 tarafı: İçerik Sağlayıcı + Dağıtıcı + Teknoloji Sağlayıcı + Meslek Birliği. BİLİŞİM SAĞLAYICILAR DRM tarafı DEĞİLDİR.'},
+  {id:65,year:'2021-22',unit:8,text:'Aşağıdakilerden hangisi ISBN\'in sağladığı yararlardan biri <b>değildir</b>?',opts:['Toplu katalogların oluşmamasını sağlar.','Kütüphane içi sipariş ve ödünç verme işlemlerini kolaylaştırır.','Materyal siparişlerine ve bibliyografik tarama işlemlerine hız kazandırır.','Dağıtımın hızlı olması, yayımcılar ve kitap satıcıları arasında ekonomik iletişim sağlar.','Barkod üretiminde yoğun kullanıldığı için ticari dağıtım sistemlerine hız kazandırır.'],ans:0,exp:'ISBN yararı DEĞİL: "Toplu katalogların OLUŞMAMASINI sağlar." Tam tersi! ISBN toplu katalogların OLUŞMASINI sağlar.'},
+  {id:66,year:'2021-22',unit:5,text:'Aşağıdakilerden hangisi ECMAScript\'e ait özelliklerden biri <b>değildir</b>?',opts:['ECMAScript bir betik dilidir.','Netscape\'ten Brendan Eich tarafından geliştirilmiş bir programlama dilinin standart halidir.','Yaygın olarak web tarayıcılarında kullanılmakta olan dinamik bir programlama dilidir.','JavaScript ile yazılan istemci tarafı betikler sayesinde tarayıcının kullanıcıyla etkileşimde bulunması sağlar.','XML tipi veriler üzerinde sorgulama yapabilmek için geliştirilmiş bir dildir.'],ans:4,exp:'ECMAScript\'in özelliği DEĞİL: "XML tipi veriler üzerinde sorgulama için geliştirilmiş bir dil." Bu XQuery/XPath\'in işidir. ECMAScript = JavaScript standardı; web tarayıcılarında istemci taraflı betik dilidir.'},
+  {id:67,year:'2021-22',unit:5,text:'Bilgisayarlar ile veri iletme/alma birimleri arasında organizasyonu sağlayan, böylece bir yerden diğerine veri iletişimini olanaklı kılan veri iletişim protokolleri aşağıdakilerden hangisi ile ifade edilmektedir?',opts:['DNS','Jquery','RSS','TCP/IP','Whois'],ans:3,exp:'TCP/IP: Bilgisayarlar ile veri iletme/alma birimleri arasında organizasyonu sağlayan, bir yerden diğerine veri iletişimini olanaklı kılan protokol ailesi. DNS = alan adı çözümleme. RSS = haber besleme.'},
+];
+
+// ============ TAHMİNİ SORULAR ============
+const TAHMINI_QUESTIONS = [
+  {unit:5,text:'Aşağıdakilerden hangisi "------- herhangi bir iletim ortamının ya da haberleşme kanalının kapasitesini ifade etmek için kullanılır" cümlesinde boş bırakılan yeri doğru şekilde tamamlar?',opts:['Üst Veriler','Bant Genişliği','İstemci Taraflı','Bağlantı Metni','Çıkma Oranı'],ans:1,exp:'BANT GENİŞLİĞİ: Herhangi bir iletim ortamının ya da haberleşme kanalının kapasitesini ifade eden terim. Örn: 100 Mbps = 100 Megabit/saniye bant genişliği.'},
+  {unit:5,text:'Nielsen\'e göre F-tabanlı okuma düzeninde kullanıcıların baskın okuma sırası hangisidir?',opts:['Dikey tara → Üst oku → Aşağı kaydır','Üst kısım → Aşağı kaydır → Dikey tara','Aşağı kaydır → Üst oku → Dikey tara','Dikey tara → Aşağı kaydır → Üst oku','Üst oku → Dikey tara → Aşağı kaydır'],ans:1,exp:'F-Tabanlı okuma: 1. Sayfanın üst kısmını okurlar → 2. Sayfayı biraz aşağı kaydırarak tekrar ararlar → 3. İçeriği soldan dikey hareketle tararlar. Bu F harfinin şeklini oluşturur.'},
+  {unit:6,text:'Aşağıdakilerden hangisi I. WIPO II. UNESCO III. WTO için doğru bir ifadedir?',opts:['Yalnız I telif hakları ile ilgilidir','Yalnız I ve II telif hakları ile ilgilidir','Yalnız II telif hakları ile ilgilidir','Hepsi telif hakları ile ilgili uluslararası kuruluşlardır','Hiçbiri telif hakları ile doğrudan ilgili değildir'],ans:3,exp:'WIPO (Dünya Fikri Mülkiyet Örgütü) + UNESCO (Eğitim/Bilim/Kültür) + WTO (Ticaret Örgütü — TRIPs anlaşması) = Hepsi telif hakları ile ilgili uluslararası kuruluşlardır.'},
+  {unit:6,text:'Aşağıdakilerden hangisi çoklu sözleşmelerle ortaya çıkan ve telif haklarının uluslararası nitelikteki temel ilkelerden biri <b>değildir</b>?',opts:['Evrensellik ilkesi','Eşit işlem ilkesi','Karşılıklılık ilkesi','Tükenme ilkesi','Asgari haklar ilkesi'],ans:0,exp:'Uluslararası telif hakları temel ilkeleri: Eşit işlem + Karşılıklılık + Asgari haklar + Tükenme. EVRENSELLİK İLKESİ bu listede yer almaz (evrensellik daha çok insan hakları alanına aittir).'},
+  {unit:7,text:'Eserin ilk defa umuma arzı hakkı ile ilgili aşağıdaki ifadelerden hangisi <b>yanlıştır</b>?',opts:['Eserin yayımlanıp yayımlanmayacağına eser sahibi karar verir','Umuma arz bir defa gerçekleştikten sonra yeniden umuma arzı mümkündür','Eser ana hatlarıyla umuma tanıtılmamışsa içerik hakkında bilgiyi ancak eser sahibi verebilir','Umuma arz edilme tarzı şerefi zedelerse eser sahibi bunu engelleyebilir','Eser sahibinin izni olmadan bir kere sahnelenmesiyle umuma arzı tamamlanmış olur'],ans:4,exp:'YANLIŞ: "İzni olmadan sahnelenmesiyle umuma arzı tamamlanmış olur." DOĞRUSU: Umuma arz için eser sahibinin İZNİ gereklidir. İzinsiz sahneleme umuma arz değil, hak ihlalidir!'},
+  {unit:7,text:'Aşağıdakilerden hangisi fikri haklar (telif hakları) arasında yer alır?',opts:['Yalnız Eser sahibinin hakları','Eser sahibinin hakları ve Bağlantılı haklar','Eser sahibinin hakları, Endüstriyel tasarım ve Faydalı model','Endüstriyel tasarım ve Faydalı model','Eser sahibinin hakları, Bağlantılı haklar, Endüstriyel tasarım ve Faydalı model'],ans:1,exp:'Fikri haklar (telif hakları): Eser sahibinin hakları + Bağlantılı haklar (komşu haklar). Endüstriyel tasarım ve Faydalı model = Sınai mülkiyet haklarına girer, telif kapsamında değildir.'},
+  {unit:8,text:'Türkiye\'de internet alan adlarının yönetimi için yetkilendirilen kuruluş hangisidir?',opts:['ICANN','İTÜ','ODTÜ','TRABİS','Bilgi Teknolojileri ve İletişim Kurumu (BTK)'],ans:2,exp:'ODTÜ: Türkiye\'de internet alan adı (.tr) yönetimi ve koordinasyonu için yetkilendirilen kuruluş. TRABİS = Tahkim sistemi. ICANN = Küresel yönetim. İTÜ yanlış bir seçenektir (çeldirici).'},
+  {unit:8,text:'Aşağıdakilerden hangisi .tr uzantılı alan adı almak için doğru kategoriye karşılık gelmez?',opts:['.av.tr — Serbest avukatlar','.bel.tr — Belediyeler','.edu.tr — Üniversiteler','.net.tr — Ticari şirketler','.gov.tr — T.C. Devlet kurum ve kuruluşları'],ans:3,exp:'.net.tr = İnternet servis sağlayıcıları (ISP). TİCARİ ŞİRKETLER için doğru uzantı .com.tr\'dir. .av.tr=avukat, .bel.tr=belediye, .edu.tr=üniversite, .gov.tr=devlet — bunlar doğru.'},
+];
+
+// ============ FLASH KARTLAR ============
+const fcCards = [
+  {q:'Marka tescil süresi kaç yıldır ve nasıl yenilenir?',a:'10 YIL. 10\'ar yıllık dönemler halinde yenilenir. Süre sona ermeden 6 ay önce yenileme talebi yapılmalı.'},
+  {q:'DRM\'nin 4 tarafı nedir?',a:'1. İçerik Sağlayıcılar\n2. İçerik Dağıtıcılar\n3. Teknoloji Sağlayıcılar\n4. Meslek Birlikleri\n(Yer/Erişim/Bilişim sağlayıcılar DEĞİL!)'},
+  {q:'.tr uzantısı olmayan alan adı uyuşmazlıklarını hangi kuruluş çözer?',a:'ICANN (Tahkim Usulü). .tr uzantılı olanlar için ise TRABİS kullanılır.'},
+  {q:'KVKK m.11\'de YER ALMAYAN hak hangisidir?',a:'"Öneminin açıklanmasını isteme" hakkı m.11\'de yer almaz. Gerçek haklar: Öğrenme, Düzeltme, Silme, 3. kişileri bilme, Zarar giderimi.'},
+  {q:'Sabit tasarımın avantajı nedir?',a:'Tasarımcının içerik görünümünü kontrol edebilmesi. Birden fazla cihaz için esneklik SABİT\'in avantajı DEĞİL, dezavantajıdır.'},
+  {q:'.org.tr uzantısı kimlere verilir?',a:'Vakıf, dernek, sivil toplum örgütü vb. kuruluşlara. (.av.tr=avukat, .bel.tr=belediye, .com.tr=ticari)'},
+  {q:'Telif bulundurması zorunlu iki açık lisans türü hangileridir?',a:'1. GPL (Genel Kamu Lisansı)\n2. Yaratıcı Beraberlikler (Creative Commons)\nMIT ve Apache telif bulundurma zorunluluğu yoktur.'},
+  {q:'Veri Sorumlusu kimdir?',a:'Kişisel verileri kaydeden, saklayan, güncelleyen, 3. kişilere açıklayabilen, sınıflandırabilen ve işleyebilen kişi.'},
+  {q:'Fonogram Yapımcısı kimdir?',a:'Sözlü ya da sözsüz tüm eserlerin ilk tespitini yapan ve hukuksal sorumluluğu yüklenen kişi.'},
+  {q:'Erişilebilirliğin POUR ilkeleri nelerdir?',a:'P - Perceivable (Algılanabilirlik)\nO - Operable (Çalışabilirlik)\nU - Understandable (Anlaşılabilirlik)\nR - Robust (Sağlamlık)'},
+  {q:'Basit ve Sezgisel Kullanım ilkesinin tanımı nedir?',a:'"Tasarımın kullanımı, kullanıcının tecrübe, bilgi, dil becerileri ya da dikkat düzeyine bağlı olmaksızın kolay anlaşılmalı, rahat olmalıdır."'},
+  {q:'Hosting nedir? Güncelleme nedir?',a:'Hosting: Web sunucularında barındırma.\nGüncelleme: Resim, flash animasyon, banner gibi görsel ihtiyaçların yerine getirilmesi.'},
+  {q:'Faydalı Model ile Patent arasındaki temel fark nedir?',a:'Faydalı Model = 10 yıl koruma.\nPatent = 20 yıl koruma.\nFaydalı model koruması patente kıyasla DAHA KISA sürelidir.'},
+  {q:'Yaratıcı Beraberlikler\'in (CC) kâr amacı var mıdır?',a:'HAYIR. Creative Commons KÂR AMACI GÜTMEZ. Bu bir özelliği değil, özelliği DEĞİLdir şeklinde sorulur!'},
+  {q:'Telif haklarının özelliği olmayan şey nedir?',a:'"Somut niteliğe sahip olma" telif hakkının özelliği DEĞİLDİR. Telif hakları SOYUT haklardır.'},
+  {q:'WIPO, UNESCO ve WTO telif hakları ile ilgili midir?',a:'EVET, HEPSİ ilgilidir. WIPO=Fikri Mülkiyet. UNESCO=Kültür. WTO=TRIPs Anlaşması (Ticari boyut).'},
+  {q:'ISBN\'nin yararı olmayan şey nedir?',a:'"Toplu katalogların OLUŞMAMASINI sağlar" YANLIŞ. ISBN toplu katalogların OLUŞMASINI sağlar!'},
+  {q:'Bern Sözleşmesi nerede ve ne zaman imzalandı?',a:'BERN\'de (İsviçre) 9 Eylül 1886\'da imzalandı. Paris\'te değil! İlkeleri: Karşılıklılık + Eşit işlem + Asgari haklar.'},
+  {q:'Manevi hak mı? Mali hak mı? Çoğaltma, Temsil, Yayma, İşleme',a:'DÖRDÜ DE MALİ HAKLAR. Manevi haklar: Umuma arz + Adını belirtme + Değişikliği önleme + Malik/zilyede karşı haklar.'},
+  {q:'GPL avantajı olmayan şey nedir?',a:'"Kullanıcının üretici firmaya bağımlı olması" GPL avantajı DEĞİL. GPL tam tersi kullanıcıyı ÖZGÜR KILARAK bağımsız yapar!'},
+];
+let fcIdx = 0;
+let fcStatus = fcCards.map(()=>'');
+
+// ============ SINAV MOD VARIABLES ============
+let sinavQuestions = [];
+let sinavCurrentIdx = 0;
+let sinavAnswered = [];
+let sinavTimer = null;
+let sinavTimeLeft = 1800;
+
+// ============ SAYFA GEÇİŞLERİ ============
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) n.classList.add('active');
+  });
+  if (id === 'cikmisSorular') renderCikmisSorular('all');
+  if (id === 'tahmini') renderTahmini();
+  if (id === 'hizliTekrar') { renderFlashcard(); renderFCDots(); }
+  if (id === 'gelisim') renderGelisim();
+  if (id === 'analiz') renderAnaliz();
+  window.scrollTo(0, 0);
+  toggleSidebar(false);
+}
+
+// ============ TEMA ============
+function toggleTheme() {
+  isDark = !isDark;
+  document.body.classList.toggle('light', !isDark);
+  document.getElementById('theme-label').textContent = isDark ? 'Aydınlık Mod' : 'Karanlık Mod';
+}
+
+// ============ SİDEBAR ============
+function toggleSidebar(forceClose) {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (forceClose === false) return;
+  if (window.innerWidth > 768) return;
+  sb.classList.toggle('open');
+  ov.classList.toggle('show');
+}
+
+// ============ ÇIKMIŞ SORULAR ============
+let currentCikmisFilter = 'all';
+function filterCikmisSorular(unit) {
+  currentCikmisFilter = unit;
+  document.querySelectorAll('#cikmisTabs .tab').forEach(t => t.classList.remove('active'));
+  const tabMap = {'all':0,'2024-25':1,'2023-24':2,'2021-22':3,5:4,6:5,7:6,8:7};
+  const idx = tabMap[unit];
+  if (idx !== undefined) document.querySelectorAll('#cikmisTabs .tab')[idx]?.classList.add('active');
+  renderCikmisSorular(unit);
+}
+
+function renderCikmisSorular(filter) {
+  const letters = ['A','B','C','D','E'];
+  let questions;
+  if (filter === 'all') {
+    questions = CIKMIS_QUESTIONS;
+  } else if (typeof filter === 'string' && filter.includes('-')) {
+    questions = CIKMIS_QUESTIONS.filter(q => q.year === filter);
+  } else {
+    questions = CIKMIS_QUESTIONS.filter(q => q.unit === filter);
+  }
+
+  // Group by year for display
+  const showYearHeaders = (filter === 'all' || typeof filter === 'number');
+  let html = '';
+  let lastYear = '';
+  const yearLabels = {'2024-25':'📅 2024–2025 Bahar Dönemi (20 Soru)','2023-24':'📅 2023–2024 Bahar Dönemi (20 Soru)','2021-22':'📅 2021–2022 Bahar Dönemi (20 Soru)'};
+  
+  questions.forEach((q, qi) => {
+    if (showYearHeaders && q.year !== lastYear) {
+      if (lastYear !== '') html += '</div>';
+      html += `<div style="margin-bottom:8px;margin-top:${lastYear?'28px':'0'};"><div style="font-size:12px;font-weight:700;color:var(--accent);font-family:var(--mono);letter-spacing:0.05em;padding:10px 0;border-bottom:2px solid var(--accent);margin-bottom:16px;">${yearLabels[q.year] || q.year}</div>`;
+      lastYear = q.year;
+    }
+    html += `<div class="question-box">
+      <div class="q-num">Soru ${qi+1} · ${q.year} · Ünite ${q.unit}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-options">
+        ${q.opts.map((o,i) => `<div class="q-option" id="copt-${q.id}-${i}" onclick="selectCikmis(${q.id},${i},${q.ans},${q.unit})"><span class="opt-letter">${letters[i]}</span>${o}</div>`).join('')}
+      </div>
+      <div id="cexp-${q.id}" style="display:none;" class="explanation-box"></div>
+    </div>`;
+  });
+  if (showYearHeaders && lastYear !== '') html += '</div>';
+  document.getElementById('cikmisSorularContainer').innerHTML = html;
+}
+
+function selectCikmis(qid, idx, ans, unit) {
+  const exp = document.getElementById('cexp-' + qid);
+  if (exp.style.display !== 'none') return;
+  const q = CIKMIS_QUESTIONS.find(x => x.id === qid);
+  for (let i = 0; i < 5; i++) {
+    const el = document.getElementById(`copt-${qid}-${i}`);
+    if (!el) continue;
+    el.onclick = null;
+    if (i === ans) el.classList.add('correct');
+    else if (i === idx) el.classList.add('wrong');
+  }
+  const isCorrect = idx === ans;
+  exp.className = 'explanation-box' + (isCorrect ? '' : ' wrong');
+  exp.innerHTML = `<div class="exp-title${isCorrect?'':' wrong'}">${isCorrect ? '✓ Doğru!' : '✗ Yanlış — Doğru: ' + ['A','B','C','D','E'][ans]}</div>${q.exp}`;
+  exp.style.display = 'block';
+  if (isCorrect) { stats.correct++; stats.byUnit[unit].c++; }
+  else { stats.wrong++; stats.byUnit[unit].w++; }
+  updateStatCards();
+}
+
+// ============ SINAV MODU ============
+function startSinav() {
+  const allQ = [...CIKMIS_QUESTIONS, ...TAHMINI_QUESTIONS.map((q,i) => ({...q, id: 1000+i}))];
+  sinavQuestions = shuffle(allQ).slice(0, 20);
+  sinavCurrentIdx = 0;
+  sinavAnswered = new Array(20).fill(null);
+  sinavTimeLeft = 1800;
+  document.getElementById('sinav-start').style.display = 'none';
+  document.getElementById('sinav-active').style.display = 'block';
+  document.getElementById('sinav-result').style.display = 'none';
+  renderSinavSoru();
+  startTimer();
+}
+
+function renderSinavSoru() {
+  const q = sinavQuestions[sinavCurrentIdx];
+  const letters = ['A','B','C','D','E'];
+  document.getElementById('sinav-q-num').textContent = sinavCurrentIdx + 1;
+  document.getElementById('sinav-progress').style.width = ((sinavCurrentIdx + 1) / 20 * 100) + '%';
+  document.getElementById('sinav-next-btn').style.display = 'none';
+  document.getElementById('sinav-question-area').innerHTML = `
+    <div class="question-box">
+      <div class="q-num">Soru ${sinavCurrentIdx + 1} · Ünite ${q.unit}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-options">
+        ${q.opts.map((o,i) => `<div class="q-option" id="sopt-${i}" onclick="selectSinav(${i})"><span class="opt-letter">${letters[i]}</span>${o}</div>`).join('')}
+      </div>
+      <div id="sinav-exp" style="display:none;" class="explanation-box"></div>
+    </div>`;
+}
+
+function selectSinav(idx) {
+  if (sinavAnswered[sinavCurrentIdx] !== null) return;
+  sinavAnswered[sinavCurrentIdx] = idx;
+  const q = sinavQuestions[sinavCurrentIdx];
+  for (let i = 0; i < q.opts.length; i++) {
+    const el = document.getElementById('sopt-' + i);
+    if (!el) continue;
+    el.onclick = null;
+    if (i === q.ans) el.classList.add('correct');
+    else if (i === idx) el.classList.add('wrong');
+  }
+  const isCorrect = idx === q.ans;
+  const exp = document.getElementById('sinav-exp');
+  exp.className = 'explanation-box' + (isCorrect ? '' : ' wrong');
+  exp.innerHTML = `<div class="exp-title${isCorrect?'':' wrong'}">${isCorrect ? '✓ Doğru!' : '✗ Yanlış — Doğru: ' + ['A','B','C','D','E'][q.ans]}</div>${q.exp}`;
+  exp.style.display = 'block';
+  if (isCorrect) { stats.correct++; stats.byUnit[q.unit].c++; }
+  else { stats.wrong++; stats.byUnit[q.unit].w++; }
+  updateStatCards();
+  document.getElementById('sinav-next-btn').style.display = 'inline-flex';
+  if (sinavCurrentIdx === 19) document.getElementById('sinav-next-btn').textContent = 'Sınavı Bitir ✓';
+}
+
+function nextSinavSoru() {
+  if (sinavCurrentIdx < 19) {
+    sinavCurrentIdx++;
+    renderSinavSoru();
+  } else {
+    endSinav();
+  }
+}
+
+function endSinav() {
+  clearInterval(sinavTimer);
+  stats.exams++;
+  updateStatCards();
+  const correct = sinavAnswered.filter((a, i) => a !== null && a === sinavQuestions[i].ans).length;
+  const answered = sinavAnswered.filter(a => a !== null).length;
+  const pct = Math.round(correct / 20 * 100);
+  const grade = pct >= 75 ? '🏆 Geçti' : pct >= 60 ? '✅ Yeterli' : pct >= 45 ? '⚠️ Sınırda' : '❌ Yetersiz';
+  const unitResults = [5,6,7,8].map(u => {
+    const qs = sinavQuestions.map((q,i)=>({...q,idx:i})).filter(q=>q.unit===u);
+    const uc = qs.filter(q=>sinavAnswered[q.idx]===q.ans).length;
+    return {u, c:uc, t:qs.length};
+  });
+  document.getElementById('sinav-active').style.display = 'none';
+  document.getElementById('sinav-result').style.display = 'block';
+  document.getElementById('sinav-result').innerHTML = `
+    <div class="card" style="max-width:600px;margin:0 auto;">
+      <div class="result-score" style="color:${pct>=60?'var(--green)':pct>=45?'var(--amber)':'var(--red)'};">${pct}<span style="font-size:36px;">%</span></div>
+      <div class="result-grade">${grade}</div>
+      <hr class="divider">
+      <div class="grid g3" style="margin-bottom:20px;">
+        <div class="stat"><div class="stat-val" style="color:var(--green);">${correct}</div><div class="stat-label">Doğru</div></div>
+        <div class="stat"><div class="stat-val" style="color:var(--red);">${answered - correct}</div><div class="stat-label">Yanlış</div></div>
+        <div class="stat"><div class="stat-val" style="color:var(--text3);">${20 - answered}</div><div class="stat-label">Boş</div></div>
+      </div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;">Ünite Bazlı Sonuç:</div>
+      ${unitResults.map(ur => ur.t > 0 ? `<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text2);">Ünite ${ur.u}</span><span style="font-family:var(--mono);color:${ur.c/ur.t>=0.6?'var(--green)':'var(--red)'};">${ur.c}/${ur.t}</span></div><div class="progress-bar"><div class="progress-fill" style="width:${ur.t>0?ur.c/ur.t*100:0}%;background:${ur.c/ur.t>=0.6?'var(--green)':'var(--red)'};"></div></div></div>` : '').join('')}
+      <hr class="divider">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="startSinav()">Tekrar Dene</button>
+        <button class="btn btn-ghost" onclick="showPage('gelisim')">Gelişim Takibi</button>
+      </div>
+    </div>`;
+}
+
+function startTimer() {
+  clearInterval(sinavTimer);
+  sinavTimer = setInterval(() => {
+    sinavTimeLeft--;
+    const m = Math.floor(sinavTimeLeft / 60);
+    const s = sinavTimeLeft % 60;
+    const display = document.getElementById('sinav-timer');
+    if (display) {
+      display.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+      display.className = 'timer-display' + (sinavTimeLeft < 300 ? ' danger' : sinavTimeLeft < 600 ? ' warning' : '');
+    }
+    if (sinavTimeLeft <= 0) { clearInterval(sinavTimer); endSinav(); }
+  }, 1000);
+}
+
+// ============ TAHMİNİ SORULAR ============
+function renderTahmini() {
+  const letters = ['A','B','C','D','E'];
+  document.getElementById('tahmini-container').innerHTML = TAHMINI_QUESTIONS.map((q,qi) => `
+    <div class="question-box">
+      <div class="q-num">Tahmini Soru ${qi+1} · Ünite ${q.unit} <span class="badge badge-amber" style="margin-left:8px;">TAHMİNİ</span></div>
+      <div class="q-text">${q.text}</div>
+      <div class="q-options">
+        ${q.opts.map((o,i) => `<div class="q-option" id="topt-${qi}-${i}" onclick="selectTahmini(${qi},${i})">${'<span class="opt-letter">' + letters[i] + '</span>'}${o}</div>`).join('')}
+      </div>
+      <div id="texp-${qi}" style="display:none;" class="explanation-box"></div>
+    </div>`).join('');
+}
+
+function selectTahmini(qi, idx) {
+  const q = TAHMINI_QUESTIONS[qi];
+  const exp = document.getElementById('texp-'+qi);
+  if (exp.style.display !== 'none') return;
+  for(let i=0;i<5;i++) {
+    const el = document.getElementById(`topt-${qi}-${i}`);
+    if(!el) continue;
+    el.onclick = null;
+    if(i === q.ans) el.classList.add('correct');
+    else if(i === idx) el.classList.add('wrong');
+  }
+  const isCorrect = idx === q.ans;
+  exp.className = 'explanation-box' + (isCorrect ? '' : ' wrong');
+  exp.innerHTML = `<div class="exp-title${isCorrect?'':' wrong'}">${isCorrect?'✓ Doğru!':'✗ Yanlış — Doğru: '+['A','B','C','D','E'][q.ans]}</div>${q.exp}`;
+  exp.style.display = 'block';
+  if (isCorrect) { stats.correct++; stats.byUnit[q.unit].c++; }
+  else { stats.wrong++; stats.byUnit[q.unit].w++; }
+  updateStatCards();
+}
+
+// ============ FLASH KART ============
+function renderFlashcard() {
+  const card = fcCards[fcIdx];
+  document.getElementById('fc-question').textContent = card.q;
+  document.getElementById('fc-answer').textContent = card.a;
+  document.getElementById('fc-idx').textContent = fcIdx + 1;
+  document.getElementById('fc-total').textContent = fcCards.length;
+  document.getElementById('fc-card').classList.remove('flipped');
+}
+
+function flipFC() {
+  document.getElementById('fc-card').classList.toggle('flipped');
+}
+
+function fcNext() {
+  fcIdx = (fcIdx + 1) % fcCards.length;
+  renderFlashcard();
+  renderFCDots();
+}
+
+function fcPrev() {
+  fcIdx = (fcIdx - 1 + fcCards.length) % fcCards.length;
+  renderFlashcard();
+  renderFCDots();
+}
+
+function fcMarkOk() {
+  fcStatus[fcIdx] = 'ok';
+  renderFCDots();
+  fcNext();
+}
+
+function fcMarkNo() {
+  fcStatus[fcIdx] = 'no';
+  renderFCDots();
+  fcNext();
+}
+
+function renderFCDots() {
+  const container = document.getElementById('fc-dots');
+  container.innerHTML = fcCards.map((c,i) => `
+    <div onclick="fcIdx=${i};renderFlashcard();renderFCDots();" style="width:12px;height:12px;border-radius:50%;cursor:pointer;background:${fcStatus[i]==='ok'?'var(--green)':fcStatus[i]==='no'?'var(--red)':i===fcIdx?'var(--accent)':'var(--bg3)'};border:1px solid var(--border);"></div>
+  `).join('');
+}
+
+// ============ ANALİZ ============
+function renderAnaliz() {
+  const topicFreq = [
+    {label:'Alan Adı Uzantıları (.tr)',count:6,color:'var(--red)'},
+    {label:'Sabit/Esnek Tasarım Avantajı',count:5,color:'var(--red)'},
+    {label:'DRM Tarafları (hangisi değildir)',count:5,color:'var(--red)'},
+    {label:'KVKK m.11 Hakları',count:4,color:'var(--amber)'},
+    {label:'Marka Koruma Süresi',count:4,color:'var(--amber)'},
+    {label:'Hosting / Banner / Mailing',count:3,color:'var(--accent)'},
+    {label:'Erişilebilirlik İlkeleri',count:3,color:'var(--accent)'},
+    {label:'Yaratıcı Beraberlikler',count:2,color:'var(--purple)'},
+    {label:'GPL Avantaj/Dezavantajı',count:2,color:'var(--purple)'},
+    {label:'Manevi/Mali Haklar Ayrımı',count:2,color:'var(--teal)'},
+  ];
+  document.getElementById('analiz-list').innerHTML = topicFreq.map(t => `
+    <div class="heat-item">
+      <span style="font-size:12px;color:var(--text2);min-width:200px;">${t.label}</span>
+      <div class="heat-bar"><div class="heat-fill" style="width:${t.count/6*100}%;background:${t.color};"></div></div>
+      <span class="heat-count">${t.count}x</span>
+    </div>`).join('');
+
+  const tipFreq = [
+    {label:'Hangisi değildir? (olumsuz)',count:18,color:'var(--red)'},
+    {label:'Boşluk doldurma',count:10,color:'var(--amber)'},
+    {label:'Hangisi doğrudur?',count:6,color:'var(--accent)'},
+    {label:'Hangisi yanlıştır?',count:4,color:'var(--purple)'},
+    {label:'I, II, III eşleştirme',count:3,color:'var(--green)'},
+  ];
+  document.getElementById('tip-list').innerHTML = tipFreq.map(t => `
+    <div class="heat-item">
+      <span style="font-size:12px;color:var(--text2);min-width:180px;">${t.label}</span>
+      <div class="heat-bar"><div class="heat-fill" style="width:${t.count/18*100}%;background:${t.color};"></div></div>
+      <span class="heat-count">${t.count}</span>
+    </div>`).join('');
+
+  const uniteFreq = [{u:5,label:'Ünite 5 — Web Tasarımı',count:11},{u:6,label:'Ünite 6 — Lisanslar',count:10},{u:7,label:'Ünite 7 — Kişisel Veri & Marka',count:12},{u:8,label:'Ünite 8 — Alan Adı & DRM',count:10}];
+  document.getElementById('unite-dist').innerHTML = uniteFreq.map(u => `
+    <div class="heat-item">
+      <span style="font-size:12px;color:var(--text2);min-width:160px;">${u.label}</span>
+      <div class="heat-bar"><div class="heat-fill" style="width:${u.count/12*100}%;background:var(--accent);"></div></div>
+      <span class="heat-count">${u.count}</span>
+    </div>`).join('');
+}
+
+// ============ GELİŞİM ============
+function renderGelisim() {
+  const total = stats.correct + stats.wrong;
+  const oran = total > 0 ? Math.round(stats.correct/total*100) : 0;
+  const unitData = [5,6,7,8].map(u => ({
+    u, c: stats.byUnit[u].c, w: stats.byUnit[u].w,
+    total: stats.byUnit[u].c + stats.byUnit[u].w,
+    oran: stats.byUnit[u].c + stats.byUnit[u].w > 0 ? Math.round(stats.byUnit[u].c/(stats.byUnit[u].c+stats.byUnit[u].w)*100) : 0
+  }));
+  document.getElementById('gelisim-container').innerHTML = `
+    <div class="grid g4" style="margin-bottom:24px;">
+      <div class="stat"><div class="stat-val" style="color:var(--accent);">${total}</div><div class="stat-label">Çözülen</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--green);">${stats.correct}</div><div class="stat-label">Doğru</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--red);">${stats.wrong}</div><div class="stat-label">Yanlış</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--amber);">${oran}%</div><div class="stat-label">Başarı</div></div>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div style="font-size:13px;font-weight:600;margin-bottom:16px;">Ünite Başarı Oranları</div>
+        ${unitData.map(u => `
+          <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+              <span style="color:var(--text2);">Ünite ${u.u}</span>
+              <span style="font-family:var(--mono);color:${u.oran>=70?'var(--green)':u.oran>=50?'var(--amber)':'var(--red)'};">${u.oran}% (${u.c}/${u.total})</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:${u.oran}%;background:${u.oran>=70?'var(--green)':u.oran>=50?'var(--amber)':'var(--red)'}"></div></div>
+          </div>`).join('')}
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:600;margin-bottom:16px;">Zayıf Konular Analizi</div>
+        ${unitData.filter(u=>u.w>0).sort((a,b)=>b.w-a.w).map(u => `
+          <div class="heat-item">
+            <span style="font-size:12px;color:var(--text2);min-width:80px;">Ünite ${u.u}</span>
+            <div class="heat-bar"><div class="heat-fill" style="width:${u.total>0?100:0}%;background:var(--red);opacity:0.6;"></div></div>
+            <span class="heat-count" style="color:var(--red);">${u.w} hata</span>
+          </div>`).join('') || '<div style="color:var(--text3);font-size:13px;">Henüz yeterli veri yok. Soru çözmeye başla!</div>'}
+        <hr class="divider">
+        <div style="font-size:12px;color:var(--text3);">${stats.exams > 0 ? `${stats.exams} sınav tamamlandı.` : 'Henüz sınav modu tamamlanmadı.'}</div>
+      </div>
+    </div>`;
+}
+
+// ============ STAT KARTLARI ============
+function updateStatCards() {
+  document.getElementById('stat-dogru').textContent = stats.correct;
+  document.getElementById('stat-yanlis').textContent = stats.wrong;
+  document.getElementById('stat-sinav').textContent = stats.exams;
+  const t = stats.correct + stats.wrong;
+  document.getElementById('stat-dogru-oran').textContent = t > 0 ? `%${Math.round(stats.correct/t*100)} başarı` : '—';
+  document.getElementById('stat-yanlis-oran').textContent = t > 0 ? `${t} toplam` : '—';
+}
+
+// ============ YARDIMCI ============
+function shuffle(arr) {
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+// Init
+updateStatCards();
+</script>
+</body>
+</html>
